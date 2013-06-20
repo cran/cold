@@ -64,7 +64,7 @@ Integ <- coldIntegrate(li=-2.5, ls=2.5, lig=-2.5, lsg=2.5)
 ### AR1R without patient 207
 seizure207 <- seizure[seizure$id!=207,]
 
-seiz1R <- cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure207, 
+seiz1R <- cold(y~lage+lbase+v4+trt+trt*lbase, data=seizure207, 
     dependence="AR1R", integrate=Integ)
 summary (seiz1R)
 

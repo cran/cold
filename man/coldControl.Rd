@@ -2,7 +2,7 @@
 \alias{coldControl}
 \title{Auxiliary for Controlling "cold" Fitting}
 \description{Auxiliary function as user interface for \code{cold} fitting }
-\usage{coldControl(maxit=100, abstol=-Inf, reltol=sqrt(.Machine$double.eps))}    
+\usage{coldControl(maxit = 100, abstol = 1e-006, reltol = 1e-006)}
 \arguments{ 
  \item{maxit}{maximum number of iterations.}      
  \item{abstol}{absolute convergence tolerance.}     

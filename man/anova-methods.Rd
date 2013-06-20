@@ -37,7 +37,7 @@ and likelihood ratio tests under nonstandard conditions.
 \examples{\donttest{
 #####  data= seizure
 
-seiz1<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, start=NULL, 
+seiz1<-cold(y~lage+lbase+v4+trt+trt*lbase, data=seizure, start=NULL, 
 dependence="AR1")
 
 seiz2<-cold(y~lage+lbase+v4+trt, data=seizure, start=NULL, dependence="AR1")

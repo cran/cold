@@ -2,9 +2,7 @@
 \alias{cold}
 \title{ fit of parametric models for count longitudinal data via likelihood method}
 \description{\code{cold} performs the fit of parametric models via likelihood method. 
-Serial dependence and random intercept are allowed according to the stochastic model chosen. 
-Missing values and unbalanced data are automatically accounted for computing the 
-likelihood function.}
+Serial dependence and random intercept are allowed according to the stochastic model chosen.}
 \usage{cold(formula = formula(data), data, time, id, subSET, aggregate = FALSE, 
        start = NULL, trace = FALSE, dependence="ind", method = "BFGS", 
        control = coldControl(), integrate = coldIntegrate())}
@@ -102,14 +100,14 @@ Likelihood approach for count data in longitudinal experiments. \emph{Computatio
 str(seizure)
 
 ### AR1
-seiz1<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, start=NULL, dependence="AR1")
+seiz1<-cold(y~lage+lbase+v4+trt+trt*lbase, data=seizure, start=NULL, dependence="AR1")
 
 summary(seiz1)
 getAIC(seiz1)
 getLogLik(seiz1)
 
 ### independence
-seiz<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, start=NULL, dependence="ind")
+seiz<-cold(y~lage+lbase+v4+trt+trt*lbase, data=seizure, start=NULL, dependence="ind")
 
 summary(seiz)
 getAIC(seiz)

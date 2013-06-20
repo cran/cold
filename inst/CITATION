@@ -13,26 +13,27 @@ citEntry(entry = "Article",
 				as.person("Eduardo Escrich"),
                              as.person("Montse Solanas")),
          year         = "2007",
-         journal      = "Computational Statistics and Data Analysis",
+         journal      = "Computational statistics and Data Analysis",
          volume       = "51",
        	 number	      = "12",
          pages        = "6511--6520",         
          textVersion = 
          paste("Gonçalves MH, Cabral MS, Ruiz de Villa MC, Escrich E, Solanas M(2007).", 
                "Likelihood approach for count data in longitudinal experiments.",
-               "Computational Statistics and Data Analysis, 51(12), 6511-6520")
+               "Computational statistics and Data Analysis, 51(12), 6511-6520")
 )
 
 
 citEntry(entry = "Manual",
          title = "{cold}: A Package for {C}ount {L}ongitudinal {D}ata",
          author = personList(as.person("M. Helena Gon\\c{c}alves"),
-			     as.person("M. Salom\\'{e} Cabral")), 
+			     as.person("M. Salom\\'{e} Cabral"), 
+                             as.person("Adelchi Azzalini")),
          year = year,
          note = vers,  
        	 url = "http://CRAN.R-project.org/package=cold",
 	        textVersion = 
-	        paste("Gonçalves MH, Cabral MS",
+	        paste("Gonçalves MH, Cabral MS, Azzalini A ",
          	  "(", year, "). cold: A Package for Count Longitudinal Data, ",
 	           vers, ". URL: http://CRAN.R-project.org/package=cold", sep="") 
 )

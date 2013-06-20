@@ -5,8 +5,7 @@
 \description{
 \code{cold} performs Poisson regression analysis for longitudinal count
   data, allowing for serial dependence among observations from a given individual and a random intercept term. 
-  Estimation is via maximization of the exact likelihood of a suitably defined model. Missing values and 
-  unbalanced data are allowed. 
+  Estimation is via maximization of the exact likelihood of a suitably defined model. 
 }
 \details{This package contains functions to perform the fit of parametric models via likelihood method for count
 longitudinal data using "S4" classes and methods as implemented in the \code{methods} package.}

@@ -150,8 +150,9 @@ k1<-1
 	}
 		if(trace)	cat(paste("\t",(format( logL,digit=6)), collapse=" "), "\n")
 
-return(-logL)}
 
+
+return(-logL)}
 
 # ------------------------------------------------------------------- 
 
@@ -197,16 +198,6 @@ counts<-data[[3]]
 logL<-0
 k1<-1
 
-npar <- as.integer(length(parameters))
-rho<- as.double(parameters[npar])
-
-if (rho < 0 |  rho >1 ) 
-{ logL<-NaN
-		if(trace)	cat(paste("\t",(format( logL,digit=6)), collapse=" "), "\n")
-return(NaN)}
-
-else if (rho > 0 &  rho < 1 ) 
-{
 	for (i in 1:n.cases)
 	{
 	k2<-cumti.repl[i]
@@ -216,8 +207,9 @@ else if (rho > 0 &  rho < 1 )
 	k1<-k2+1
 	}
 		if(trace)	cat(paste("\t",(format( logL,digit=6)), collapse=" "), "\n")
+
 return(-logL)}
-}
+
 
 ######################################################################## começa novo
 # ------------------------------------------------------------------- 
@@ -276,6 +268,7 @@ counts<-data[[3]]
 logL1<-0
 k1<-1
 
+
 	for (i in 1:n.cases)
 	{
 	k2<-cumti.repl[i]
@@ -285,6 +278,7 @@ k1<-1
 	logL1<-logL1+counts[i]*log(z*(1/(sqrt(2*pi)*exp(omega1/2))))
 	k1<-k2+1
 	}
+
 		if(trace)	cat(paste("\t",(format( logL1,digit=6)), collapse=" "), "\n")
 return(-logL1)}
 
@@ -300,6 +294,7 @@ LogL.pss0I.aux<- function(parameters, X, data, trace)
 	beta<- as.double(param[1:(npar-1)])
 	bt<- as.double(param[1:(npar-1)])
 	omega<-as.double(param[npar])
+	y[is.na(y)]<-(-1)
 	y<- as.integer(y)
 	n <- as.integer(length(y)) 
 	x<-matrix(as.double(X),nrow=n,ncol=npar-1)
@@ -311,8 +306,7 @@ LogL.pss0I.aux<- function(parameters, X, data, trace)
 	m<-glm(as.numeric(y)~offset(eta), family=poisson)
 	bi<-coef(m)
 	beta[1]<-beta[1]+bi
-	y[is.na(y)]<-(-1)
-	y<- as.integer(y)
+
 
 
 		link <- as.integer(1)
@@ -345,7 +339,6 @@ LogL.pss0I.aux<- function(parameters, X, data, trace)
 	fitted<-as.double(rep(0,length(y)))
 	logL1<-as.double(0)
 	k1<-1
-
 	for (i in 1:n.cases)
 	{
 	k2<-cumti.repl[i]
@@ -355,7 +348,6 @@ LogL.pss0I.aux<- function(parameters, X, data, trace)
 	}
 
 return(fit=fitted)}
-
 
 # ------------------------------------------------------------------- acaba novo
 
@@ -407,16 +399,8 @@ y<-data[[2]]
 counts<-data[[3]]
 logL1<-0
 k1<-1
-npar <- as.integer(length(parameters))
-rho<- as.double(parameters[npar-1])
 
-if (rho < 0 |  rho >1 ) 
-{ logL<-NaN
-		if(trace)	cat(paste("\t",(format( logL,digit=6)), collapse=" "), "\n")
-return(NaN)}
 
-else if (rho > 0 &  rho < 1 ) 
-{
 	for (i in 1:n.cases)
 	{
 	k2<-cumti.repl[i]
@@ -429,7 +413,7 @@ else if (rho > 0 &  rho < 1 )
 
 		if(trace)	cat(paste("\t",(format( logL1,digit=6)), collapse=" "), "\n")
 return(-logL1)}
-}
+
 
 ############### to compute fitted
 
@@ -443,6 +427,7 @@ LogL.pss1I.aux<- function(parameters, X, data, trace)
 	bt<- as.double(param[1:(npar-1)])
 	rho<-as.double(param[npar])
 	omega<-as.double(param[npar+1])
+	y[is.na(y)]<-(-1)
 	y<- as.integer(y)
 	n <- as.integer(length(y)) 
 	x<-matrix(as.double(X),nrow=n,ncol=npar-1)
@@ -454,8 +439,6 @@ LogL.pss1I.aux<- function(parameters, X, data, trace)
 	m<-glm(as.numeric(y)~offset(eta), family=poisson)
 	bi<-coef(m)
 	beta[1]<-beta[1]+bi
-	y[is.na(y)]<-(-1)
-	y<- as.integer(y)
 
 		link <- as.integer(1)
 		m <- max(y)
@@ -1031,6 +1014,7 @@ if (any(is.na(start))) stop("starting values produced by glm contains NA")
 
 	Fitted <- exp(Fitted)
 	Fitted[is.na(y)] <- NA
+
 
 	y.matrix<-matrix(y,ncol=n.time,byrow=TRUE)
 	y.av<-apply(y.matrix,2,mean,na.rm=TRUE)
