@@ -1,0 +1,8 @@
+R package 'cold' history file
+-------------------------------
+
+2013-01-26, version 1.0-1: 
+- coldControl changes in both absolute and relative convergence tolerance.
+
+
+2013-06-20, version 1.0-0: first upload to CRAN.

@@ -24,7 +24,7 @@
 seizure207<-seizure[seizure$id!=207,] 
 
 ### indR
-seiz0R<-cold(y~lage+lbase+v4+trt+trt*lbase, data=seizure207,dependence="indR")
+seiz0R<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure207,dependence="indR")
 
 str(fitted(seiz0R))
 
