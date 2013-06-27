@@ -100,14 +100,14 @@ Likelihood approach for count data in longitudinal experiments. \emph{Computatio
 str(seizure)
 
 ### AR1
-seiz1<-cold(y~lage+lbase+v4+trt+trt*lbase, data=seizure, start=NULL, dependence="AR1")
+seiz1<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, start=NULL, dependence="AR1")
 
 summary(seiz1)
 getAIC(seiz1)
 getLogLik(seiz1)
 
 ### independence
-seiz<-cold(y~lage+lbase+v4+trt+trt*lbase, data=seizure, start=NULL, dependence="ind")
+seiz<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, start=NULL, dependence="ind")
 
 summary(seiz)
 getAIC(seiz)
