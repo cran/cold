@@ -1,7 +1,10 @@
 R package 'cold' history file
 -------------------------------
 
-2013-01-26, version 1.0-1: 
+2013-07-30, version 1.0-2: 
+- amended R code in random intercept model to allow missing data.
+
+2013-06-26, version 1.0-1: 
 - coldControl changes in both absolute and relative convergence tolerance.
 
 

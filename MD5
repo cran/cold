@@ -1,8 +1,8 @@
-838c4e73be75a9d6bce9f1925bbd6674 *DESCRIPTION
+304dd53f0dd85a4db72b368f3b9e123d *DESCRIPTION
 71ed9ee66db0bf9c4eba1c566cabb3be *INDEX
 962f599651dfff8a8205739e69818b62 *NAMESPACE
 9ea10fcf0062b324902e4d1ca800c121 *R/anova_cold.R
-9dd57489d7e4cf09a52e9b10044b24f3 *R/cold.R
+a0666c15fd66aabbe27f29a304dcc27a *R/cold.R
 9ca12b2fecd3cd957d0c0da398918db9 *R/coldControl.R
 22b10aac2e8da3ca75b8194b28c895ff *R/coldIntegrate.R
 d340938e1a549259cc1e71a916e502d3 *R/fitted_cold.R
@@ -16,12 +16,12 @@ cf778782f58892b0f292d417145c38f8 *R/show_cold.R
 96a983c1cad14f84f71395bf51c0190a *R/summary_cold.R
 a9cad1153dcb44c52c4ebab1f80efc5c *data/datacold.rda
 a7a9bd1b25255411bff5071545b67548 *data/seizure.rda
-f88142ac1c7a149e4b38c85b3ffacf1b *history.txt
-f08e78fc0e83a1ee4a2344836d1c48bd *inst/CITATION
+f64a570f64214e763f7e7d418f737d4d *history.txt
+756aeb8eb6e0ae2c8ba6e3837bb5f62c *inst/CITATION
 6011d38edf99edcc2f81f12b02a70797 *man/anova-methods.Rd
 891aebdaf8e6dccaf332551ace810f95 *man/cold-class.Rd
-165fbce53404256fc9038920136a3e2a *man/cold-package.Rd
-bce814775e363ed8897ab10057dfdf61 *man/cold.Rd
+b44d29c805011f027c9c7a7fbb70b4af *man/cold-package.Rd
+f30969a8a52e7caec0a17591d24908b9 *man/cold.Rd
 9b46ffea318b29d28aea72f7e928118d *man/coldControl.Rd
 fd2dd5d7be3940436450ca9507105e50 *man/coldIntegrate.Rd
 a01b596ba7cd4ab4d20c6b03e2c52598 *man/datacold.rd
