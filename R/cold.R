@@ -294,7 +294,6 @@ LogL.pss0I.aux<- function(parameters, X, data, trace)
 	beta<- as.double(param[1:(npar-1)])
 	bt<- as.double(param[1:(npar-1)])
 	omega<-as.double(param[npar])
-	y[is.na(y)]<-(-1)
 	y<- as.integer(y)
 	n <- as.integer(length(y)) 
 	x<-matrix(as.double(X),nrow=n,ncol=npar-1)
@@ -306,7 +305,8 @@ LogL.pss0I.aux<- function(parameters, X, data, trace)
 	m<-glm(as.numeric(y)~offset(eta), family=poisson)
 	bi<-coef(m)
 	beta[1]<-beta[1]+bi
-
+	y[is.na(y)]<-(-1)
+	y<- as.integer(y)
 
 
 		link <- as.integer(1)
@@ -427,7 +427,6 @@ LogL.pss1I.aux<- function(parameters, X, data, trace)
 	bt<- as.double(param[1:(npar-1)])
 	rho<-as.double(param[npar])
 	omega<-as.double(param[npar+1])
-	y[is.na(y)]<-(-1)
 	y<- as.integer(y)
 	n <- as.integer(length(y)) 
 	x<-matrix(as.double(X),nrow=n,ncol=npar-1)
@@ -439,6 +438,8 @@ LogL.pss1I.aux<- function(parameters, X, data, trace)
 	m<-glm(as.numeric(y)~offset(eta), family=poisson)
 	bi<-coef(m)
 	beta[1]<-beta[1]+bi
+	y[is.na(y)]<-(-1)
+	y<- as.integer(y)
 
 		link <- as.integer(1)
 		m <- max(y)
@@ -1014,7 +1015,6 @@ if (any(is.na(start))) stop("starting values produced by glm contains NA")
 
 	Fitted <- exp(Fitted)
 	Fitted[is.na(y)] <- NA
-
 
 	y.matrix<-matrix(y,ncol=n.time,byrow=TRUE)
 	y.av<-apply(y.matrix,2,mean,na.rm=TRUE)
