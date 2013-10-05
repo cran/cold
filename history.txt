@@ -1,6 +1,9 @@
 R package 'cold' history file
 -------------------------------
 
+2013-10-05, version 1.0-3: 
+- improvements in R code.
+
 2013-07-30, version 1.0-2: 
 - amended R code in random intercept model to allow missing data.
 

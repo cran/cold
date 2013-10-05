@@ -150,9 +150,8 @@ k1<-1
 	}
 		if(trace)	cat(paste("\t",(format( logL,digit=6)), collapse=" "), "\n")
 
-
-
 return(-logL)}
+
 
 # ------------------------------------------------------------------- 
 
@@ -198,6 +197,16 @@ counts<-data[[3]]
 logL<-0
 k1<-1
 
+npar <- as.integer(length(parameters))
+rho<- as.double(parameters[npar])
+
+if (rho < 0 |  rho >1 ) 
+{ logL<-NaN
+		if(trace)	cat(paste("\t",(format( logL,digit=6)), collapse=" "), "\n")
+return(NaN)}
+
+else if (rho > 0 &  rho < 1 ) 
+{
 	for (i in 1:n.cases)
 	{
 	k2<-cumti.repl[i]
@@ -207,9 +216,8 @@ k1<-1
 	k1<-k2+1
 	}
 		if(trace)	cat(paste("\t",(format( logL,digit=6)), collapse=" "), "\n")
-
 return(-logL)}
-
+}
 
 ######################################################################## começa novo
 # ------------------------------------------------------------------- 
@@ -268,7 +276,6 @@ counts<-data[[3]]
 logL1<-0
 k1<-1
 
-
 	for (i in 1:n.cases)
 	{
 	k2<-cumti.repl[i]
@@ -278,7 +285,6 @@ k1<-1
 	logL1<-logL1+counts[i]*log(z*(1/(sqrt(2*pi)*exp(omega1/2))))
 	k1<-k2+1
 	}
-
 		if(trace)	cat(paste("\t",(format( logL1,digit=6)), collapse=" "), "\n")
 return(-logL1)}
 
@@ -339,6 +345,7 @@ LogL.pss0I.aux<- function(parameters, X, data, trace)
 	fitted<-as.double(rep(0,length(y)))
 	logL1<-as.double(0)
 	k1<-1
+
 	for (i in 1:n.cases)
 	{
 	k2<-cumti.repl[i]
@@ -348,6 +355,7 @@ LogL.pss0I.aux<- function(parameters, X, data, trace)
 	}
 
 return(fit=fitted)}
+
 
 # ------------------------------------------------------------------- acaba novo
 
@@ -399,8 +407,16 @@ y<-data[[2]]
 counts<-data[[3]]
 logL1<-0
 k1<-1
+npar <- as.integer(length(parameters))
+rho<- as.double(parameters[npar-1])
 
+if (rho < 0 |  rho >1 ) 
+{ logL<-NaN
+		if(trace)	cat(paste("\t",(format( logL,digit=6)), collapse=" "), "\n")
+return(NaN)}
 
+else if (rho > 0 &  rho < 1 ) 
+{
 	for (i in 1:n.cases)
 	{
 	k2<-cumti.repl[i]
@@ -413,7 +429,7 @@ k1<-1
 
 		if(trace)	cat(paste("\t",(format( logL1,digit=6)), collapse=" "), "\n")
 return(-logL1)}
-
+}
 
 ############### to compute fitted
 
