@@ -2,7 +2,7 @@
 \docType{methods}
 \alias{predict-methods}
 \alias{predict,cold-method}
-\title{Extract "cold" predict values}
+\title{Extract "cold" Predict Values}
 \description{ Methods for function \code{predict} extracting predict values of a fitted model object from class \code{\link[=cold-class]{cold}}. }
 \usage{
 \S4method{predict}{cold}(object)

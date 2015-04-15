@@ -1,8 +1,8 @@
 \name{datacold}
 \alias{datacold}
 \docType{data}
-\title{data}
-\description{This example is an artificial data.}
+\title{Data}
+\description{This example is an artificial data}
 \usage{data(datacold)}
 \format{
   A data frame with 650 observations on the following 4 variables.
@@ -14,19 +14,19 @@
   }
 }
 
-\examples{\donttest{
+\examples{
 data(datacold)
 
-mod0<- cold(z~Time*Treatment, data=datacold, time="Time",id="Subject",
-aggregate=Treatment, dependence="ind")
+mod0<- cold(z~Time*Treatment, data=datacold, time="Time", 
+id="Subject", aggregate=Treatment, dependence="ind")
 summary (mod0)
 
-modI<- cold(z~Time*Treatment, data=datacold, time="Time",id="Subject", 
-aggregate=Treatment, dependence="AR1")
+modI<- cold(z~Time*Treatment, data=datacold, time="Time", 
+id="Subject", aggregate=Treatment, dependence="AR1")
 summary (modI)
 
 anova(mod0,modI)
 
 plot(modI,which=1,xlab="Time (weeks)",ylab="Count",main="Model AR1")
-}}
+}
 \keyword{datasets}

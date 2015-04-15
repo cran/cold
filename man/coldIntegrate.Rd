@@ -2,8 +2,8 @@
 \alias{coldIntegrate}
 \title{ Auxiliary for Controlling "cold" Fitting}
 \description{Auxiliary function as user interface for \code{cold} fitting }
-\usage{coldIntegrate(li=-4,ls=4, epsabs=.Machine$double.eps^.25,
-       epsrel=.Machine$double.eps^.25,limit=100,key=6,lig=-4,lsg=4) }
+\usage{coldIntegrate(li=-4,ls=4, epsabs=.Machine$double.eps^.25, 
+epsrel=.Machine$double.eps^.25,limit=100,key=6,lig=-4,lsg=4) }
 \arguments{ 
   \item{li}{lower limit of integration for the log-likelihood.}                                                                 
   \item{ls}{upper limit of integration for the log-likelihood.}                                                                 
@@ -47,19 +47,19 @@ use \code{coldIntegrate} function to set the integration limits for the
 likelihood and for the gradient to small values 
 than the default ones. 
  
-If fitting procedure is complete but when computing the information matrix 
-some NaNs are produced, the change of the default values for the gradient integration 
-limits (\code{lig} and \code{lsg}) in \code{coldIntegrate} function might solve this problem.
+When the fitting procedure is complete but the computation of the information matrix 
+produces NaNs, changing in \code{coldIntegrate} function the default values for the gradient 
+integration limits (\code{lig} and \code{lsg}) might solve this problem.
   }    
 
 \value{A list with the arguments as components.}    
 
 \seealso{\code{\link{cold-class}}}
 
-\examples{\donttest{ 
+\examples{ 
 #####  data= seizure
 
-Integ <- coldIntegrate(li=-2.5, ls=2.5, lig=-2.5, lsg=2.5)
+Integ <- coldIntegrate(li=-3.5, ls=3.5, lig=-3.5, lsg=3.5)
 
 ### AR1R without patient 207
 seizure207 <- seizure[seizure$id!=207,]
@@ -68,6 +68,6 @@ seiz1R <- cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure207,
     dependence="AR1R", integrate=Integ)
 summary (seiz1R)
 
-}}
+}
 
 \keyword{function}

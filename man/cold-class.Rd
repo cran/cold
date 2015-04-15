@@ -2,7 +2,7 @@
 \Rdversion{1.0}
 \docType{class}
 \alias{cold-class}
-\title{Class "cold" for results of a maximum likelihood estimation}
+\title{Class "cold" for Results of a Maximum Likelihood Estimation}
 \description{This class encapsulates results of a maximum likelihood procedure.}
 \section{Objects from the Class}{Objects can be created by calls of the form \code{new("cold", ...)}, 
 but most often as the result of a call to \code{\link{cold}}.}

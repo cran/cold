@@ -1,7 +1,7 @@
 \name{seizure}
 \alias{seizure}
 \docType{data}
-\title{Epileptic seizure}
+\title{Epileptic Seizure}
 \description{The dataset has the number of epileptic seizures in each of four two-week intervals, 
 and in a baseline eight-week interval, for treatment and control groups with a total of 59 individuals.}
 \usage{data(seizure)}
@@ -27,24 +27,20 @@ count data with overdispersion. \emph{Biometrics}, 46, 657--671.}
 Diggle, P.J., Liang, K.Y., and Zeger, S.L. (1994). Analysis of Longitudinal Data. Clarendon Press.
 }
 
-\examples{\donttest{ 
+\examples{
 #####  data= seizure
  str(seizure) 
 
 ### independence 
-seiz0<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, dependence="ind")
+seiz0<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, 
+dependence="ind")
 summary (seiz0)
 
 ### AR1
-seiz1<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure,dependence="AR1")
+seiz1<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, 
+dependence="AR1")
 summary (seiz1)
 
-### AR1R without patient 207
-seizure207<-seizure[seizure$id!=207,]
-
-seiz1R<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure207, dependence="AR1R")
-summary(seiz1R)
-
-}}
+}
 
 \keyword{datasets}

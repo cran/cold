@@ -1,13 +1,13 @@
 \name{cold}
 \alias{cold}
-\title{ fit of parametric models for count longitudinal data via likelihood method}
-\description{\code{cold} performs the fit of parametric models via likelihood method. 
+\title{ Fit of Parametric Models for Count Longitudinal Data via Likelihood Method}
+\description{Performs the fit of parametric models via likelihood method. 
 Serial dependence and random intercept are allowed according to the stochastic model chosen. 
 Missing values and unbalanced data are automatically accounted for computing the 
 likelihood function.}
-\usage{cold(formula = formula(data), data, time, id, subSET, aggregate = FALSE, 
-       start = NULL, trace = FALSE, dependence="ind", method = "BFGS", 
-       control = coldControl(), integrate = coldIntegrate())}
+\usage{cold(formula = formula(data), data, time, id, subSET, 
+aggregate = FALSE, start = NULL, trace = FALSE, dependence="ind", 
+method = "BFGS", control = coldControl(), integrate = coldIntegrate())}
 \arguments{ 
   \item{formula}{a description of the model to be fitted of the form response~predictors}
   \item{data}{a \code{data} frame containing the variables in the formula. NA values are allowed. 
@@ -26,7 +26,7 @@ likelihood function.}
   According to the stochastic model chosen serial dependence and random effects are allowed. 
   There are four options: "\code{ind}" (independence), "\code{AR1}" (first order autoregressive),  
   "\code{indR}" (independence with random intercept) or "\code{AR1R}" (first order autoregressive with random intercept).}
-  \item{method}{The \code{method} to be used in the optimization process: "\code{BFGS}","\code{CG}", "\code{L-BFGS-B}" and "\code{SANN}". 
+  \item{method}{The \code{method} used in the optimization process: "\code{BFGS}","\code{CG}", "\code{L-BFGS-B}" and "\code{SANN}". 
   The default is "\code{BFGS}". 
   See \code{\link[stats]{optim}} for details.}
   \item{control}{a list of algorithmic constants for the optimizer \code{optim}. 
@@ -97,19 +97,21 @@ Likelihood approach for count data in longitudinal experiments. \emph{Computatio
 
 \seealso{\code{\link{cold-class}}, \code{\link{coldControl}}, \code{\link{coldIntegrate}}, \code{\link[stats]{optim}}}
 
-\examples{\donttest{ 
+\examples{
 #####  data= seizure
 str(seizure)
 
 ### AR1
-seiz1<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, start=NULL, dependence="AR1")
+seiz1<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, start=NULL, 
+dependence="AR1")
 
 summary(seiz1)
 getAIC(seiz1)
 getLogLik(seiz1)
 
 ### independence
-seiz<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, start=NULL, dependence="ind")
+seiz<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, start=NULL, 
+dependence="ind")
 
 summary(seiz)
 getAIC(seiz)
@@ -120,9 +122,9 @@ getLogLik(seiz)
 str(datacold)
 
 ### AR1R
-modIR<- cold(z~Time*Treatment, data=datacold, time="Time", id="Subject", 
-aggregate=Treatment, dependence="AR1R")
+modIR<- cold(z~Time*Treatment, data=datacold, time="Time", 
+id="Subject", aggregate=Treatment, dependence="AR1R")
 summary (modIR)
-}}
+}
 
 \keyword{function}

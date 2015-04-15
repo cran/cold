@@ -1,9 +1,9 @@
 \name{cold-package}
 \alias{cold-package}
 \docType{package}
-\title{cold: a package for Count Longitudinal Data}
+\title{Count Longitudinal Data}
 \description{
-\code{cold} performs Poisson regression analysis for longitudinal count
+Performs Poisson regression analysis for longitudinal count
   data, allowing for serial dependence among observations from a given individual and a random intercept term. 
   Estimation is via maximization of the exact likelihood of a suitably defined model. Missing values and 
   unbalanced data are allowed. 

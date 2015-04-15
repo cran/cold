@@ -2,7 +2,7 @@
 \docType{methods}
 \alias{anova-methods}
 \alias{anova,cold-method}
-\title{Methods for function anova in package "cold"}
+\title{Methods for Function anova in Package "cold"}
 \description{ Compute an analysis deviance table for two fitted model objects. }
 
 \usage{
@@ -34,7 +34,7 @@ The comparison between two models by anova will only be valid if they are fitted
 and likelihood ratio tests under nonstandard conditions. 
 \emph{Journal of the American Statistical Association}, 82, 605-610.}
 
-\examples{\donttest{
+\examples{
 #####  data= seizure
 
 seiz1<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, start=NULL, 
@@ -53,7 +53,7 @@ mod0R<- cold(z~Time*Treatment, data=datacold, time="Time", id="Subject",
 aggregate=Treatment, dependence="indR")
 
 anova(mod0, mod0R, correct = TRUE)
-}}
+}
 
 
 \keyword{methods}

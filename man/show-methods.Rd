@@ -3,7 +3,7 @@
 \alias{show-methods}
 \alias{show,cold-method}
 \alias{show,summary.cold-method}
-\title{Methods for function show in package "cold"}
+\title{Methods for Function show in Package "cold"}
 \description{Show objects of classes \code{cold} and \code{summary.cold}.}
 \section{Methods}{
 \describe{

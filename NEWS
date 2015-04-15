@@ -1,0 +1,20 @@
+R package 'cold' News
+-------------------------------
+
+2015-04-15, version 1.0-4:
+- using 'meta' variable when reading the CITATION file.
+- modification of title in DESCRIPTION;
+- introduced a NEWS file.
+- amended PDF manual.
+
+2013-10-05, version 1.0-3:
+- improvements in R code.
+
+2013-07-30, version 1.0-2:
+- amended R code in random intercept model to allow missing data.
+
+2013-06-26, version 1.0-1:
+- coldControl changes in both absolute and relative convergence tolerance.
+
+
+2013-06-20, version 1.0-0: first upload to CRAN. 

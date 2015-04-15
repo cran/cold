@@ -2,7 +2,7 @@
 \Rdversion{1.0}
 \docType{class}
 \alias{summary.cold-class}
-\title{Class "summary.cold", summary of "cold" objects}
+\title{Class "summary.cold", Summary of "cold" Objects}
 \description{Extract of \code{\link{cold}} object}
 \section{Objects from the Class}{Objects can be created by calls of the form \code{new("summary.cold", ...)}, 
 but most often by invoking \code{summary} on an \code{cold} object. They contain values meant for printing by \code{show}.}

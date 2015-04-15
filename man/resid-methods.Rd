@@ -2,7 +2,7 @@
 \docType{methods}
 \alias{resid-methods}
 \alias{resid,cold-method}
-\title{Extract "cold" residuals}
+\title{Extract "cold" Residuals}
 \description{ The residuals for the fitted model represented by \code{object} are extracted.}
 
 \usage{
@@ -20,24 +20,24 @@
 \item{\code{signature(object="cold")}:}{residuals for \code{\link{cold}} object.} 
 }}
 
-\examples{\donttest{ 
+\examples{
 #####  data= seizure
-
 ### without patient 207
 seizure207<-seizure[seizure$id!=207,] 
 
 ### indR
-seiz0R<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure207,dependence="indR")
+seiz0R<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure207, 
+dependence="indR")
 
 str(resid(seiz0R))
 
 #####  data= datacold
 ### AR1
-modI<- cold(z~Time*Treatment, data=datacold, time="Time",id="Subject",aggregate=Treatment,
-dependence="AR1")
+modI<- cold(z~Time*Treatment, data=datacold, time="Time", 
+id="Subject", aggregate=Treatment, dependence="AR1")
 
 str(resid(modI))
-}}
+}
 
 \keyword{methods}
 
