@@ -1,7 +1,7 @@
 \name{coldIntegrate}
 \alias{coldIntegrate}
-\title{ Auxiliary for Controlling "cold" Fitting}
-\description{Auxiliary function as user interface for \code{cold} fitting }
+\title{ Auxiliary for controlling "cold" fitting}
+\description{Auxiliary function as user interface for \code{cold} fitting.}
 \usage{coldIntegrate(li=-4,ls=4, epsabs=.Machine$double.eps^.25, 
 epsrel=.Machine$double.eps^.25,limit=100,key=6,lig=-4,lsg=4) }
 \arguments{ 
@@ -17,14 +17,12 @@ epsrel=.Machine$double.eps^.25,limit=100,key=6,lig=-4,lsg=4) }
     20 - 41 points if key = 4,\cr                                                                                                      
     25 - 51 points if key = 5 and \cr                                                                                                  
     30 - 61 points if key = 6.}                                                                                                        
-    \item{limit}{integer that gives an upperbound on the number of subintervals in the partition                                
-     of (\code{li},\code{ls}), limit.ge.1.}                                                                                            
+    \item{limit}{integer that gives an upperbound on the number of subintervals in the partition of (\code{li},\code{ls}), limit.ge.1.}                                                                                            
     \item{lig}{lower limit of integration for the gradient.}                                                                    
     \item{lsg}{upper limit of integration for the gradient.}                                                                    
    }      
  \details{       
- \code{coldIntegrate} returns a list of constants that are used to compute integrals based on a Fortran-77 subroutine \code{dqage} from a   
- Fortran-77 subroutine package \code{QUADPACK} for the numerical computation of definite one-dimensional integrals.              
+ \code{coldIntegrate} returns a list of constants that are used to compute integrals based on a Fortran-77 subroutine \code{dqage} from a   Fortran-77 subroutine package \code{QUADPACK} for the numerical computation of definite one-dimensional integrals.              
  The subroutine \code{dqage} is a simple globally adaptive integrator in which it is possible to choose between 6 pairs          
  of Gauss-Kronrod quadrature formulae for the rule evaluation component. The source code \code{dqage} was modified and re-named  
  \code{dqager}, the change was the introduction of an extra variable that allow, in our Fortran-77 subroutines when              
@@ -62,11 +60,13 @@ integration limits (\code{lig} and \code{lsg}) might solve this problem.
 Integ <- coldIntegrate(li=-3.5, ls=3.5, lig=-3.5, lsg=3.5)
 
 ### AR1R without patient 207
+\donttest{ 
 seizure207 <- seizure[seizure$id!=207,]
 
-seiz1R <- cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure207, 
-    dependence="AR1R", integrate=Integ)
-summary (seiz1R)
+seiz1R1.207 <- cold(y~lage+lbase+v4+trt+trt:lbase, random=~1, 
+data=seizure207, dependence="AR1R", integrate=Integ)
+summary (seiz1R1.207)
+}
 
 }
 

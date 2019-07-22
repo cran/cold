@@ -13,25 +13,28 @@
       i0=0
       do 10 i=1,n
         if (link.eq.0) then 
-	theta(i)=work(i)
+      theta(i)=work(i)
         else if (link.eq.1) then 
-	theta(i)=dexp(work(i))
+      theta(i)=dexp(work(i))
        end if
    10 continue
+      
       i0=1
-   20   if (y(i0).eq.(-1)) then
+   20 if (y(i0).eq.(-1)) then
       i0=i0+1
       go to 20
-      end if	
-
+      end if
+      
       n0 = n
-   30   if (y(n0).eq.(-1)) then
+   30 if (y(n0).eq.(-1)) then
       n0=n0-1
       go to 30
       end if
 
       logL=0
-      logL =  -theta(i0)+y(i0)*dlog( theta(i0))
+
+      logL=-theta(i0)+y(i0)*dlog(theta(i0))-dlog(fact(y(i0)))
+C      logL=-theta(i0)+y(i0)*dlog(theta(i0))
 
       if (i0.eq.n0) return
       i = i0+1
@@ -46,8 +49,14 @@ C  i0 is the most recent (past) observation time
 C  i1 is the next observation time
   
       prob=fpss(i0,y(i0),i1,y(i1),theta,rho,fact)
-      logL = logL+dlog(prob*fact(y(i1)))
-
+      logL = logL+dlog(prob)
+      
+C      logL = logL+dlog(prob*fact(y(i1)))
+      ! logL = logL+ dlog(prob*fact(y(i1))) 
+      ! moltiplico prob per fact(y(i1)) per prevenire -Inf,
+      ! inoltre questo sostanzialmente e` simile a togliere il fact() 
+      ! a denominatore in una Poisson
+      
       i0=i1
       i=i0+1
       go to 40

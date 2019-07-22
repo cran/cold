@@ -2,7 +2,7 @@
 \docType{methods}
 \alias{plot-methods}
 \alias{plot,cold,missing-method}
-\title{Methods for Function plot in Package "cold"}
+\title{Methods for function \code{plot} }
 \description{Three plots (selectable by \code{which}) are currently available:   
 a plot for the fitted model (\code{which}=1), a plot for the individual mean profile (\code{which}=2) 
 and a plot for the observed data and the corresponded mean profile (\code{which}=3).
@@ -32,30 +32,30 @@ ident=FALSE,caption=c("Individual mean profiles"),cex.caption=1)}
 \examples{
 #####  data= datacold
 ### AR1R
-modIR<- cold(z~Time*Treatment, data=datacold, time="Time", 
+mod1R<- cold(z~Time*Treatment, data=datacold, time="Time", 
 id="Subject", aggregate=Treatment, dependence="AR1R")
 
-plot(modIR, which=1, xlab="Time(weeks)", ylab="Count", 
+plot(mod1R, which=1, xlab="Time(weeks)", ylab="Count", 
 main="Model AR1R")
 
-plot(modIR, which=2, xlab="Time(weeks)", ylab="Count", 
+plot(mod1R, which=2, xlab="Time(weeks)", ylab="Count", 
 main="Model AR1R")
 
 par(mfrow=c(1,2))
-plot(modIR, which=2, ident=TRUE, subSET=Treatment=="0", 
+plot(mod1R, which=2, ident=TRUE, subSET=Treatment=="0", 
 ylab="Count", main="0")
-plot(modIR, which=2, ident=TRUE, subSET=Treatment=="1", 
+plot(mod1R, which=2, ident=TRUE, subSET=Treatment=="1", 
 ylab="Count", main="1")
 par(mfrow=c(1,1))
 
 par(mfrow=c(2,2))
-plot(modIR, which=3, subSET=(id==c(2)), xlab="Time (weeks)", 
+plot(mod1R, which=3, subSET=(id==c(2)), xlab="Time (weeks)", 
 ylab="count", main="0_Subject2")
-plot(modIR, which=3, subSET=(id==c(10)), xlab="Time (weeks)",
+plot(mod1R, which=3, subSET=(id==c(10)), xlab="Time (weeks)",
 ylab="Count", main="0_Subject10")
-plot(modIR, which=3, subSET=(id==c(26)), xlab="Time (weeks)",
+plot(mod1R, which=3, subSET=(id==c(26)), xlab="Time (weeks)",
 ylab="Count", main="1_Subject26")
-plot(modIR, which=3, subSET=(id==c(32)), xlab="Time (weeks)",
+plot(mod1R, which=3, subSET=(id==c(30)), xlab="Time (weeks)",
 ylab="Count", main="1_Subject32")
 par(mfrow=c(1,1))
 

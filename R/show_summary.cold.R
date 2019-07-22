@@ -2,7 +2,7 @@ setMethod("show",
     signature(object = "summary.cold"),
     function (object) 
     {
-	cat("\nCall:\n")
+  cat("\nCall:\n")
 	dput(object@call)
 	coef <- object@coefficients
 	nas <- is.na(coef[, 1])
@@ -11,10 +11,10 @@ setMethod("show",
 	coef[, 1] <- 1:dim(coef)[[1]]
 	coef[, 3] <- object@se[, 1][!nas]
 	coef[, 4] <- round(coef[, 2]/coef[, 3], 3)
-	dimnames(coef) <- list(cnames, c("Label", "Value", "Std. Error", "t value"))
+	dimnames(coef) <- list(cnames, c("Label", "Estimate", "Std. Error", "t value"))
 	cat("\nNumber of profiles used in the fit: ", object@n.cases, "\n")
 	cat("\nCoefficients:\t\n") 
-	print(coef[ ,  ])
+	return(coef[ ,  ])
 	cat("\nLog likelihood: ", round(object@log.likelihood, 4),"\n")
 	cat("\nAIC: ", round(object@aic, 4),"\n")
 	cat("\nMessage: ", object@message,"\n")

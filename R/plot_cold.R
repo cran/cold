@@ -135,16 +135,19 @@ if (any(show[1:2])){
 
 		for(j1 in 1:ncurves)
 				{
-                n2<-j1*(n.time)
-		lines(x3,exp(eta[n1:n2]),col=j1,lty=1)
+    n2<-j1*(n.time)
+#		lines(x3,exp(eta[n1:n2]),col=j1,lty=1) # modificado Junho19
+		lines(x3,exp(eta[n1:n2]),col="grey60",lty=j1,lwd=1.25)
           	n1<-n2+1
 		                }
 
 
 
 		if(ncurves>1){legend(x3[2],p1,levg,
- 		lty=c(1,1),col=colg,bty="n",cex=0.75)}
-                 
+# 		lty=c(1,1),col=colg,bty="n",cex=0.75)} # modificado Junho19
+		lty=c(seq(1:ncurves)),col="grey60",bty="n",cex=0.75)}
+        
+        
 		if(ncurves==1){legend(x3[1],p,paste(trace.label),bty="n",cex=0.75)}
 
 			
@@ -171,13 +174,14 @@ if (any(show[1:2])){
 
 		l1<-aa
 		ylim<-range(l1,na.rm=TRUE)
-		ylim<-extendrange(l1,f=0.08)
-
+#		ylim<-extendrange(l1,f=0.08)
+#		ylim<-extendrange(l1,f=0.25)
+		ylim<-extendrange(l1,f=0.05)
 		
 
 		plot(x3,c(0,rep(1,n.time-1)), type="n", xlab=xlab,ylab=ylab,main=" ",ylim=ylim)
- 		mtext(main,side=3,1, cex=0.8)
-		mtext(caption[1],3,0.25,cex=0.8)
+ 		mtext(main,side=3,0.75, cex=0.8)
+#		mtext(caption[1],3,0.25,cex=0.8)
                 
 
             if(missing(subSET)){
@@ -209,7 +213,7 @@ if (any(show[1:2])){
              
                 id.new1<-unique(data$id)
                 aanew2<-numeric(n.subj)
-		x3new1<-numeric(n.subj)
+		            x3new1<-numeric(n.subj)
 
                 for(j in 1:n.subj) {
 
@@ -244,13 +248,14 @@ if (any(show[1:2])){
 
 		l1<-data$y
 		ylim<-range(l1,na.rm=TRUE)
-		ylim<-extendrange(l1,f=0.08)
-
+#		ylim<-extendrange(l1,f=0.08)
+#		ylim<-extendrange(l1,f=0.25)
+		ylim<-extendrange(l1,f=0.10)
 
 		plot(x3,c(0,rep(1,n.time-1)), type="n", xlab=xlab,ylab=ylab,main=" ",ylim=ylim)
 
- 		mtext(main,side=3,2, cex=0.8)
-		mtext(caption[1],3,0.25,cex=0.8)
+ 		mtext(main,side=3,0.75, cex=0.8)
+#		mtext(caption[1],3,0.25,cex=0.8)
 
 
 
@@ -261,7 +266,7 @@ if (any(show[1:2])){
              
                 id.new1<-unique(data$id)
                 aanew2<-numeric(n.subj)
-		x3new1<-numeric(n.subj)
+		            x3new1<-numeric(n.subj)
                 ynew<-data$y
 
                 for(j in 1:n.subj) {

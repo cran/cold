@@ -5,61 +5,35 @@ vers <- paste("Version", meta$Version)
 
 
 citEntry(entry = "Article",
-
-         title = "Likelihood approach for count data in longitudinal experiments",
-
-         author = personList(as.person("M. Helena Gon\\c{c}alves"),
+        title = "Likelihood approach for count data in longitudinal experiments",
+        author = personList(as.person("M. Helena Gon\\c{c}alves"),
 				as.person("M. Salom\\'{e} Cabral"),
 				as.person("M. Carme Ruiz de Villa"),
 				as.person("Eduardo Escrich"),
-
-                             as.person("Montse Solanas")),
-
-         year         = "2007",
-
-         journal      = "Computational Statistics and Data Analysis",
-
-         volume       = "51",
-
-       	 number	      = "12",
-
-         pages        = "6511--6520",
-
-         textVersion =
-
-         paste("Gonçalves MH, Cabral MS, Ruiz de Villa MC, Escrich E, Solanas M(2007).",
-
-               "Likelihood approach for count data in longitudinal experiments.",
-
-               "Computational Statistics and Data Analysis, 51(12), 6511-6520")
-
+        as.person("Montse Solanas")),
+        year         = "2007",
+        journal      = "Computational Statistics and Data Analysis",
+        volume       = "51",
+        number	      = "12",
+        pages        = "6511--6520",
+        textVersion =
+        paste("Goncalves MH, Cabral MS, Ruiz de Villa MC, Escrich E, Solanas M(2007).",
+       "Likelihood approach for count data in longitudinal experiments.",
+       "Computational Statistics and Data Analysis, 51(12), 6511-6520")
 )
 
 
-
-
-
 citEntry(entry = "Manual",
-
          title = "{cold}: A Package for {C}ount {L}ongitudinal {D}ata",
-
          author = personList(as.person("M. Helena Gon\\c{c}alves"),
-
 			     as.person("M. Salom\\'{e} Cabral")),
-
          year = year,
-
          note = vers,
-
-       	 url = "http://CRAN.R-project.org/package=cold",
-
+       	 url = "https://CRAN.R-project.org/package=cold",
 	        textVersion =
-
-	        paste("Gonçalves MH, Cabral MS",
-
+	        paste("Goncalves MH, Cabral MS",
          	  "(", year, "). cold: A Package for Count Longitudinal Data, ",
-
-	           vers, ". URL: http://CRAN.R-project.org/package=cold", sep="")
+	           vers, ". URL: https://CRAN.R-project.org/package=cold", sep="")
 
 )
 

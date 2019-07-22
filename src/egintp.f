@@ -3,9 +3,9 @@
       implicit double precision (a-h,o-z)    
       External fpb, fpvar
 
-      DOUBLE PRECISION logL,li,ls
+      DOUBLE PRECISION li,ls
       INTEGER n,npar,y2,key,limit,neval,ier,iord,last,
-     *m,mpar,y1,k,k1,k2,link,link1,iaux,maxy,maxy1
+     *m,mpar,y1,k,k2,link,link1,iaux,maxy,maxy1
 
       DIMENSION x1(4000,10),theta1(4000),
      *work1(4000),y1(4000),beta1(10),bt1(10),
@@ -48,7 +48,6 @@
      *neval,ier,alist,blist,rlist,elist,iord,last,1)
       gvar=res2
 
-       logL=result
       RETURN
       END
       

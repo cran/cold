@@ -1,7 +1,7 @@
 \name{coldControl}
 \alias{coldControl}
-\title{Auxiliary for Controlling "cold" Fitting}
-\description{Auxiliary function as user interface for \code{cold} fitting }
+\title{Auxiliary for controlling "cold" fitting}
+\description{Auxiliary function as user interface for \code{cold} fitting.}
 \usage{coldControl(maxit=100,abstol=-Inf,reltol=sqrt(.Machine$double.eps))}    
 \arguments{ 
  \item{maxit}{maximum number of iterations.}      

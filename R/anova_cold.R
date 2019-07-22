@@ -1,12 +1,13 @@
 
-setClass("cold", representation(coefficients = "matrix", se = "matrix", covariance = "matrix", correlation="matrix", 
-		log.likelihood="numeric", message ="integer",n.cases="numeric", ni.cases="numeric", aic="numeric",  
-		 Fitted="numeric", Fitted.av="numeric", Time="numeric", model.matrix= "matrix", y.matrix="matrix",
-		subset.data="data.frame",final.data="data.frame", y.av="numeric", f.value="factor", data.id="numeric",call="language"))
+setClass("cold", representation(coefficients = "matrix", se = "matrix", covariance = "matrix", correlation="matrix",
+        log.likelihood="numeric", message ="integer",n.cases="numeric", ni.cases="numeric", aic="numeric",
+        Fitted="numeric",  bi.estimate="matrix",Fitted.av="numeric", Time="numeric", model.matrix= "matrix", y.matrix="matrix", 
+        random.matrix="matrix", subset.data="data.frame",final.data="data.frame", y.av="numeric", f.value="factor", data.id="numeric",
+        call="language"))
 
 
 setMethod(f="anova", signature(object = "cold"), 
-function(object,...,test=TRUE,correct=FALSE)
+function(object,...)
 {
 
 dots <- list(...)
@@ -19,10 +20,10 @@ stop("single argument anova not implemented")
 x<-object[[1]]
 y<-object[[2]]
 
-data1<-x@n.cases
-data2<-y@n.cases
+data1<-x@y.matrix
+data2<-y@y.matrix
 
-if(data1!=data2)
+if(all.equal(data1,data2)!=TRUE) 
 stop("all models must be fit to the same data object")
 
 m1<-x@call$formula
@@ -39,7 +40,6 @@ if(length(x@coefficients)>length(y@coefficients)){
 x1<-x@log.likelihood
 x2<-x@aic 
 
- 	
 y1<-y@log.likelihood
 y2<-y@aic 
 
@@ -88,20 +88,11 @@ X2<-c(x@aic,y@aic)
 
 X31<-c(x@log.likelihood,y@log.likelihood)
 
-if(test==TRUE){
 
 ## Test. L. Ratio
 
   teste<-2*(x1-y1)# x1 mais geral
-
-if(correct==FALSE){
-  p<-1-pchisq(teste,df)}
-else{
-
-p<-0.5*(1-pchisq(teste,df))
-
-}
-
+  p<-1-pchisq(teste,df)
 
 X4<-c(" ",round(teste,3))
 X5<-c(" ",round(df,0))
@@ -115,37 +106,17 @@ print(x@call$data)
 
 cat("\nModel1:  ")
 print(x@call$formula)
+
 a<-x@call$dependence
 cat("dependence =",a,"\n")
 
-
 cat("Model2:  ")
 print(y@call$formula)
+
 b<-y@call$dependence
 cat("dependence =",b,"\n")
-print(tabela1,row.names=FALSE)}
-
-else{
-tabela2<-data.frame(X1,X2,X3,X31)
-
-names(tabela2)<-c(" ","AIC","BIC","logLik")
-
-cat("\nData:  ")
-print(x@call$data)
-
-cat("\nModel1:  ")
-print(x@call$formula)
-a<-x@call$dependence
-cat("dependence =",a,"\n")
-
-
-cat("Model2:  ")
-print(y@call$formula)
-b<-y@call$dependence
-cat("dependence =",b,"\n")
-print(tabela2,row.names=FALSE)}
-
-
+cat(" \n")
+print(tabela1,row.names=FALSE)
 }
 )
 

@@ -12,7 +12,7 @@ and in a baseline eight-week interval, for treatment and control groups with a t
     \item{\code{y}}{a numeric vector with the number of epileptic seizures in the four two-weeks intervals observed.}
     \item{\code{v4}}{a numeric vector indicating the fourth visit.}
     \item{\code{time}}{a numeric vector that identifies the number of the time points observed.}
-    \item{\code{trt}}{a numeric vector indicator of treatment.}
+    \item{\code{trt}}{a numeric vector indicator of treatment, whether the patient is treated with placebo (\code{trt=0}) or progabide (\code{trt=1})}.
     \item{\code{base}}{the number of epileptic seizures in a baseline 8-week interval.}
     \item{\code{age}}{a numeric vector of subject \code{age}.}
     \item{\code{lbase}}{recode the variable \code{base} by log(\code{base}/4).}
@@ -24,7 +24,7 @@ and in a baseline eight-week interval, for treatment and control groups with a t
 count data with overdispersion. \emph{Biometrics}, 46, 657--671.}
 
 \references{
-Diggle, P.J., Liang, K.Y., and Zeger, S.L. (1994). Analysis of Longitudinal Data. Clarendon Press.
+Diggle, P.J., Heagerty, P., Liang, K.Y., and Zeger, S.L. (2002). Analysis of Longitudinal Data. 2nd edition. Oxford University Press.
 }
 
 \examples{
@@ -32,14 +32,16 @@ Diggle, P.J., Liang, K.Y., and Zeger, S.L. (1994). Analysis of Longitudinal Data
  str(seizure) 
 
 ### independence 
-seiz0<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, 
+seiz0M<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, 
 dependence="ind")
-summary (seiz0)
+summary (seiz0M)
 
 ### AR1
-seiz1<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, 
+seiz1M<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, 
 dependence="AR1")
-summary (seiz1)
+summary (seiz1M)
+
+anova(seiz0M,seiz1M)
 
 }
 

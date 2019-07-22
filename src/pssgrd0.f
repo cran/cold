@@ -1,24 +1,22 @@
-      subroutine pssgrd0(grad,beta,rho,npar,x,y,theta,work,n,f,link)
+      subroutine pssgrd0(grad,beta,npar,x,y,theta,work,n,link)
 
       implicit double precision (a-h,o-z)
       DIMENSION x(n,npar-1),beta(npar-1),y(n),theta(n),work(n),
-     *grad(npar),f(0:200)
-      double precision nu
-      integer y,n,p,r,rmax,i,i0,i1,npar,link,n0
-      external fpss
-      G(r,k)=rm**r*(1-rm)**(k-r)
-      H(r)=expnu*nu**r/f(r)
+     *grad(npar)
+      integer y,n,p,i,i0,i1,npar,link,n0,k
+
       data zero/0.0d0/, one/1.0d0/
       p=npar-1
       call matp(x,beta,work,n,p,1)
 
       do 10 i=1,n
         if (link.eq.0) then 
-	theta(i)=work(i)
+      theta(i)=work(i)
         else if (link.eq.1) then 
-	theta(i)=dexp(work(i))
+      theta(i)=dexp(work(i))
        end if
    10 continue
+   
       i0=1
    20   if (y(i0).eq.(-1)) then
       i0=i0+1
@@ -33,11 +31,11 @@
 
       do 40 k=1,p
         if (link.eq.0) then 
-	gl=one
+      gl=one
         else if (link.eq.1) then 
-	gl=theta(i0)
+      gl=theta(i0)
         else 
-	gl=zero
+      gl=zero
        end if
       grad(k)=(-one+y(i0)/theta(i0))*gl*x(i0,k)
    40 continue
@@ -55,28 +53,19 @@
 C  i0 is the most recent (past) observation time
 C  i1 is the next observation time
 
-C  derivatives with respect to beta
-      rm=rho**(i1-i0)
-      k1=y(i1)
-      k0=y(i0)
-      prob=fpss(i0,k0,i1,k1,theta,rho,f)
-      a=-prob
-      if (k1.gt.0) then
-	 a=a+fpss(i0,k0,i1,k1-1,theta,rho,f)
-      end if
       do 70 ip=1,p
       if (link.eq.0) then
-	gl0=one
-	gl1=one
+      gl1=one
       else if (link.eq.1) then
-	gl0=theta(i0)
-	gl1=theta(i1)
+      gl1=theta(i1)
       else
-	gl=zero
+      gl1=zero
       end if
-      b=gl1*x(i1,ip)-rm*gl0*x(i0,ip)
-      grad(ip)=grad(ip)+a*b/prob
+
+      a=(-one+y(i1)/theta(i1))*gl1*x(i1,ip)
+      grad(ip)=grad(ip)+a
    70 continue
+   
 
 C  derivatives with respect to rho
       grad(npar)=zero

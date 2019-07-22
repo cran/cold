@@ -2,7 +2,7 @@
 \docType{methods}
 \alias{fitted-methods}
 \alias{fitted,cold-method}
-\title{Extract "cold" Fitted Values}
+\title{Methods for function \code{fitted}}
 \description{Methods for function \code{fitted} extracting fitted values of a fitted model object from class \code{\link[=cold-class]{cold}}. }
 
 \usage{
@@ -18,23 +18,14 @@
 }}
 
 \examples{
-#####  data= seizure
 
-### without patient 207
-seizure207<-seizure[seizure$id!=207,] 
+#####  data = seizure
 
-### indR
-seiz0R<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure207, 
-dependence="indR")
+seiz1M<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, start=NULL, 
+dependence="AR1")
 
-str(fitted(seiz0R))
+fitted(seiz1M)[1:16]
 
-#####  data= datacold
-### AR1
-modI<- cold(z~Time*Treatment, data=datacold, time="Time", 
-id="Subject", aggregate=Treatment, dependence="AR1")
-
-str(fitted(modI))
 }
 
 \keyword{methods}

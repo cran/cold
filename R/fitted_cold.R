@@ -1,16 +1,9 @@
 
-setClass("cold", representation(coefficients = "matrix", se = "matrix", covariance = "matrix", correlation="matrix", 
-		log.likelihood="numeric", message ="integer",n.cases="numeric", ni.cases="numeric", aic="numeric",  
-		 Fitted="numeric", Fitted.av="numeric", Time="numeric", model.matrix= "matrix", y.matrix="matrix",
-		subset.data="data.frame",final.data="data.frame", y.av="numeric", f.value="factor", data.id="numeric",call="language"))
-
-
 setMethod(f="fitted", signature=c(object="cold"), 
-
-function (object) 
-{    
-        mu <- object@Fitted
-
-        res<-mu
-res}
+  function (object) { 
+    
+    fit.i<-object@Fitted
+    names(fit.i) <- c(1:length(fit.i))
+    fit.i                   
+    }
 )

@@ -1,5 +1,12 @@
 R package 'cold' News
 -------------------------------
+2019-07-13 version 2.0-0
+- improvements in R code in the random intercept model.
+- allows the introduction of two random effects in the linear predictor.
+- allows the use of cubature package to compute integrals when the dependence      structure includes one or two random effects.
+- allows the use of Monte Carlo methods to compute integrals when the        dependence structure includes one or two random effects.
+- more functions and methods available for objects of class cold.
+
 
 2015-04-15, version 1.0-4:
 - using 'meta' variable when reading the CITATION file.

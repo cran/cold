@@ -3,8 +3,8 @@
 \alias{show-methods}
 \alias{show,cold-method}
 \alias{show,summary.cold-method}
-\title{Methods for Function show in Package "cold"}
-\description{Show objects of classes \code{cold} and \code{summary.cold}.}
+\title{Methods for function \code{show} }
+\description{Show objects of class \code{cold} and \code{summary.cold}.}
 \section{Methods}{
 \describe{
 \item{\code{signature(object = "cold")}}{Print simple summary of a \code{cold} object, just the call, the number of profiles in the fit, 

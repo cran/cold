@@ -2,37 +2,33 @@
 \docType{methods}
 \alias{anova-methods}
 \alias{anova,cold-method}
-\title{Methods for Function anova in Package "cold"}
-\description{ Compute an analysis deviance table for two fitted model objects. }
+\title{Methods for function \code{anova} }
+\description{Computes an analysis deviance table for two nested fitted model objects of class \code{\link{cold}}.}
 
 \usage{
-\S4method{anova}{cold}(object, ..., test = TRUE, correct = FALSE)
+\S4method{anova}{cold}(object, ...)
 }
 \arguments{ 
   \item{object}{an object of class \code{\link[=cold-class]{cold}}.}
   \item{...}{an object of class \code{\link[=cold-class]{cold}}.}
-  \item{test}{an optional logical value controlling whether likelihood ratio tests 
-  should be used to compare the fitted models represented by \code{object} and by \code{y}. The default is TRUE. }  
-  \item{correct}{an optional logical value controlling whether the p-value of the likelihood ratio test 
-  must be corrected. The default is FALSE.}  
    }  
-\details{ 
-\code{correct} = TRUE is used to test the presence of a random intercept term and the solution proposed by 
-Self and Liang (1987) is adopted only to the p-value. }
 
+\note{It uses the naive solution of Pinheiro et al. (2000) to calculate the p-value when the difference between the models is the number of random effects.}
 
 \section{Warning}{ 
 The comparison between two models by anova will only be valid if they are fitted to the same dataset.}
+
 
 \section{Methods}{
 \describe{
 \item{\code{signature(object = "ANY")}:}{Generic function.}
 \item{\code{signature(object="cold")}:}{Anova for \code{\link{cold}} object.} 
-}}
+}
+}
 
-\references{Self, Steven G. and Liang, Kung-Yee (1987). Asymptotic properties of maximum likelihood estimators 
-and likelihood ratio tests under nonstandard conditions. 
-\emph{Journal of the American Statistical Association}, 82, 605-610.}
+
+\references{Pinheiro, J.C. and Bates, D.M. (2000). Mixed-Effects Models in S and S-PLUS.
+\emph{Springer-Verlag.} }
 
 \examples{
 #####  data= seizure
@@ -49,10 +45,11 @@ anova(seiz1,seiz2)
 mod0<- cold(z~Time*Treatment, data=datacold, time="Time", id="Subject", 
 aggregate=Treatment, dependence="ind")
 
-mod0R<- cold(z~Time*Treatment, data=datacold, time="Time", id="Subject",
-aggregate=Treatment, dependence="indR")
+mod0R<- cold(z~Time*Treatment, random=~1,data=datacold, time="Time", 
+id="Subject", aggregate=Treatment, dependence="indR")
+summary(mod0R)
 
-anova(mod0, mod0R, correct = TRUE)
+anova(mod0, mod0R)
 }
 
 
