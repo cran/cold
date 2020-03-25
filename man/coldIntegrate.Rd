@@ -57,14 +57,14 @@ integration limits (\code{lig} and \code{lsg}) might solve this problem.
 \examples{ 
 #####  data= seizure
 
-Integ <- coldIntegrate(li=-3.5, ls=3.5, lig=-3.5, lsg=3.5)
+Integ <- coldIntegrate(li = -3.5, ls = 3.5, lig = -3.5, lsg = 3.5)
 
 ### AR1R without patient 207
 \donttest{ 
-seizure207 <- seizure[seizure$id!=207,]
+seizure207 <- seizure[seizure$id != 207, ]
 
-seiz1R1.207 <- cold(y~lage+lbase+v4+trt+trt:lbase, random=~1, 
-data=seizure207, dependence="AR1R", integrate=Integ)
+seiz1R1.207 <- cold(y~ lage + lbase + v4 + trt  + trt:lbase, 
+random = ~ 1, data = seizure207, dependence = "AR1R", integrate = Integ)
 summary (seiz1R1.207)
 }
 

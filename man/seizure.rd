@@ -28,20 +28,20 @@ Diggle, P.J., Heagerty, P., Liang, K.Y., and Zeger, S.L. (2002). Analysis of Lon
 }
 
 \examples{
-#####  data= seizure
- str(seizure) 
+#####  data = seizure
+str(seizure) 
 
 ### independence 
-seiz0M<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, 
-dependence="ind")
-summary (seiz0M)
+seiz0M <- cold(y ~ lage + lbase + v4 + trt + trt:lbase, data = seizure, 
+dependence = "ind")
+summary(seiz0M)
 
 ### AR1
-seiz1M<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, 
-dependence="AR1")
-summary (seiz1M)
+seiz1M <- cold(y ~ lage + lbase + v4 + trt + trt:lbase, data = seizure, 
+dependence = "AR1")
+summary(seiz1M)
 
-anova(seiz0M,seiz1M)
+anova(seiz0M, seiz1M)
 
 }
 

@@ -2,7 +2,7 @@
 setClass("cold", representation(coefficients = "matrix", se = "matrix", covariance = "matrix", correlation="matrix",
         log.likelihood="numeric", message ="integer",n.cases="numeric", ni.cases="numeric", aic="numeric",
         Fitted="numeric",  bi.estimate="matrix",Fitted.av="numeric", Time="numeric", model.matrix= "matrix", y.matrix="matrix", 
-        random.matrix="matrix", subset.data="data.frame",final.data="data.frame", y.av="numeric", f.value="factor", data.id="numeric",
+        random.matrix="matrix", subset.data="data.frame",final.data="data.frame", y.av="numeric", data.id="numeric",
         call="language"))
 
 

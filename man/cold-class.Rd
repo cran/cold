@@ -28,7 +28,6 @@ but most often as the result of a call to \code{\link{cold}}.}
     \item{\code{subset.data}:}{Object of class \code{"data.frame"}. The data subset if considered.}
     \item{\code{final.data}:}{Object of class \code{"data.frame"}. The data set considered.}
     \item{\code{y.av}:}{Object of class \code{"numeric"}. The average of the response value over an individual profile.}
-    \item{\code{f.value}:}{Object of class \code{"factor"}. Indicates the \code{aggregation} factor if present.}
     \item{\code{data.id}:}{Object of class \code{"numeric"}.  Vector of individual observations.}
     \item{\code{call}:}{Object of class \code{"language"}. The call to \code{"cold"}.} 
   }

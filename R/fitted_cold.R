@@ -4,6 +4,6 @@ setMethod(f="fitted", signature=c(object="cold"),
     
     fit.i<-object@Fitted
     names(fit.i) <- c(1:length(fit.i))
-    fit.i                   
+    round(fit.i ,6)                  
     }
 )

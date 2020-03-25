@@ -1,4 +1,4 @@
-gradLogL.pss1Ic <- function(parameters, X,data,cublim,trace)
+gradLogL.pss1Ic <- function(parameters, X,Z,data,cublim,trace)
 {
   
   gradient <- function(param,  X, y)
@@ -120,7 +120,6 @@ gradLogL.pss1Ic <- function(parameters, X,data,cublim,trace)
   cumti.repl<-cumsum(ti.repl)
   n.cases<- length(ti.repl)
   y<-data[[2]]
-  counts<-data[[3]]
   dgr<-as.double(rep(0,nparam))
   dvar<-0
   k1<-1
@@ -146,7 +145,7 @@ gradLogL.pss1Ic <- function(parameters, X,data,cublim,trace)
       if (deriv[[1]]=="Inf")  deriv[[1]]<- (1e+150)
       if (deriv[[1]]=="-Inf") deriv[[1]]<- (-1e+150)
       
-      dgr[i1]<-dgr[i1]+counts[i] *(deriv[[1]]/z[[1]])
+      dgr[i1]<-dgr[i1]+(deriv[[1]]/z[[1]])
     }
     
     
@@ -157,7 +156,7 @@ gradLogL.pss1Ic <- function(parameters, X,data,cublim,trace)
     if (deriv.var[[1]]=="Inf")  deriv.var[[1]]<- (1e+150)
     if (deriv.var[[1]]=="-Inf") deriv.var[[1]]<- (-1e+150)
     
-    dvar<-dvar+counts[i] *(deriv.var[[1]]/z[[1]])*exp(omega1) #using the chain rule
+    dvar<-dvar+(deriv.var[[1]]/z[[1]])*exp(omega1) #using the chain rule
     
     k1<-k2+1
   }

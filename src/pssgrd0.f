@@ -21,8 +21,7 @@
    20   if (y(i0).eq.(-1)) then
       i0=i0+1
       go to 20
-      end if	
-
+      end if
       n0 = n
    30   if (y(n0).eq.(-1)) then
       n0=n0-1

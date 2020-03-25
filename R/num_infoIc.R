@@ -1,7 +1,7 @@
-num.infoIc <- function(coefficients, FUN, X, data,cublim)
+num.infoIc <- function(coefficients, FUN, X, Z, data,cublim)
 {
   FUN <- get(FUN, inherits = TRUE)
-  values <- FUN(coefficients, X, data,cublim)
+  values <- FUN(coefficients, X, Z, data, cublim)
   p <- length(values)
   Info <- matrix(0, p, p)
   h <- rep(0, p)
@@ -9,7 +9,7 @@ num.infoIc <- function(coefficients, FUN, X, data,cublim)
   delta <- apply(delta, 1, max)
   for(i in 1:p) {
     h[i] <- delta[i]
-    new.values <- FUN(coefficients + h, X, data,cublim)
+    new.values <- FUN(coefficients + h, X, Z, data,cublim)
     Info[, i] <- (new.values - values)/delta[i]
     h[i] <- 0
   }

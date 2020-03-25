@@ -1,7 +1,7 @@
 Package: cold
 Type: Package
 Title: Count Longitudinal Data
-Version: 2.0-0
+Version: 2.0-1
 Author: M. Helena Goncalves and M. Salome Cabral,
   apart from a set of Fortran-77 subroutines written by R. Piessens
   and E. de Doncker, belonging to the suite "Quadpack".
@@ -18,7 +18,7 @@ License: GPL (>= 2)
 LazyLoad: yes
 LazyData: yes
 Depends: R (>= 3.1.0), methods, stats, graphics, grDevices, utils,
-        cubature
-Packaged: 2019-07-22 11:00:32 UTC; mhgon
+        cubature, MASS
+Packaged: 2020-03-25 12:54:01 UTC; mhgon
 Repository: CRAN
-Date/Publication: 2019-07-22 21:20:11 UTC
+Date/Publication: 2020-03-25 18:20:06 UTC

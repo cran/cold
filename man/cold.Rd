@@ -4,12 +4,13 @@
 \description{Performs the fit of parametric models via likelihood method. 
 Serial dependence and two random effects are allowed according to the stochastic model chosen. 
 Missing values are automatically accounted for computing the likelihood function.}
-\usage{cold(formula, random, data, id, time, subSET, dependence, 
-    start, method, integration, M, control, integrate, cublim,
-    aggregate, trace)}
+\usage{cold(formula, random, data, id="id", time="time",subSET, 
+dependence ="ind", start=NULL, method="BFGS", integration="QUADPACK", 
+M="6000", control=coldControl(), integrate=coldIntegrate(), 
+cublim=coldcublim(), trace=FALSE)}
 \arguments{ 
-  \item{formula}{a description of the model to be fitted of the form response~predictors}.
-    \item{random}{the predictos that includes random effects of the form response~predictors}.
+  \item{formula}{a description of the model to be fitted of the form response~predictors.}
+    \item{random}{the predictos that includes random effects of the form response~predictors.}
   \item{data}{a \code{data} frame containing the variables in the formula. NA values are allowed. 
   If data is missing, an error message is produced. See "Details".}
   \item{id}{a string that matches the name of the \code{id} variable in \code{data}, 
@@ -29,12 +30,11 @@ Missing values are automatically accounted for computing the likelihood function
   \item{M}{Number of random points considered to evaluate the integral when the user choose Monte Carlo methods ("\code{integration}=MC"). The default is set to 6000.}
   \item{control}{a list of algorithmic constants for the optimizer \code{optim}. 
   See R documentation of \code{optim.control} for details and possible control options. By default, \code{cold} sets the maximum number 
-  of iterations (\code{maxit}) equal to 100, the absolute convergence tolerance (\code{abstol}) and the relative 
-  convergence tolerance (\code{rel.tol}) equal to 1e-6 and uses the \code{\link[stats]{optim}} standard default values for the remaining options.}
+  of iterations (\code{maxit}) equal to 100, the absolute convergence tolerance (\code{abstol}) and the relative convergence tolerance (\code{rel.tol}) equal to 1e-6 and uses the 
+  \code{\link[stats]{optim}} standard default values for the remaining options.}
   \item{integrate}{a list of algorithmic constants for the computation of a definite integral using a Fortran-77 subroutine. See "Details".}      
  \item{cublim}{a list of algorithmic constants for the computation of a definite integral when the integration argument is set to cubature.}   
-   \item{aggregate}{a string that permits the user identify the factor to be used in \code{\link{plot-methods}}.}
-   \item{trace}{logical flag: if TRUE, details of the nonlinear optimization are printed. By default the flag is set to FALSE.}
+ \item{trace}{logical flag: if TRUE, details of the nonlinear optimization are printed. By default the flag is set to FALSE.}
 }  
 
 \section{Background}{ 
@@ -65,15 +65,7 @@ If the \code{time} component has been given a different name, this should be dec
 The \code{time} variable should identify the time points that each individual profile has been observed.
  
 
- If a response profile is replicated several times, a variable called 
- \code{counts} must be created accordingly. 
- This vector is used for weighting the response profile indicating for each individual profile the number of times that is replicated. 
- The vector \code{counts} must repeat the number of the observed replications of each individual profile as many times as the number of observed time 
- points for the correspondent profile. The program expect such vector to be named \code{counts}. 
- If each profile has been observed only once, the construction of the vector \code{counts} is not required. 
-
-\code{subSET} is an optional expression indicating the subset of \code{data} that should be 
-    used in the fit. This is a logical statement of the type 
+\code{subSET} is an optional expression indicating the subset of \code{data} that should be used in the fit. This is a logical statement of the type 
     \code{variable 1} == "a" & \code{variable 2} > x  
   which identifies the observations to be selected. All observations are included by default.    
 
@@ -104,20 +96,20 @@ Likelihood approach for count data in longitudinal experiments. \emph{Computatio
 \seealso{\code{\link{cold-class}}, \code{\link{coldControl}}, \code{\link{coldIntegrate}}, \code{\link[stats]{optim}}}
 
 \examples{
-#####  data= seizure
+#####  data = seizure
 str(seizure)
 
 ### AR1
-seiz1M<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, start=NULL, 
-dependence="AR1")
+seiz1M <- cold(y ~ lage + lbase + v4 + trt + trt:lbase, data = seizure, 
+start = NULL, dependence = "AR1")
 
 summary(seiz1M)
 getAIC(seiz1M)
 getLogLik(seiz1M)
 
 ### independence
-seiz0M<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, start=NULL, 
-dependence="ind")
+seiz0M <- cold(y ~ lage + lbase + v4 + trt + trt:lbase, data = seizure, 
+start = NULL, dependence = "ind")
 
 summary(seiz0M)
 getAIC(seiz0M)
@@ -128,8 +120,8 @@ getLogLik(seiz0M)
 str(datacold)
 
 ### AR1R with the default integration method
-mod1R<- cold(z~Time*Treatment, random=~1, data=datacold, time="Time", 
-id="Subject", aggregate=Treatment, dependence="AR1R")
+mod1R <- cold(z ~ Time * Treatment, random = ~ 1, data = datacold, 
+time = "Time", id = "Subject", dependence = "AR1R")
 
 summary (mod1R)
 vareff(mod1R)
@@ -137,9 +129,8 @@ randeff(mod1R)
 
 ### AR1R with integration="cubature"
 \donttest{ 
-mod1R.c<- cold(z~Time*Treatment, random=~1, data=datacold, time="Time", 
-id="Subject", aggregate=Treatment, dependence="AR1R", 
-integration="cubature")
+mod1R.c <- cold(z ~ Time*Treatment, random = ~ 1, data = datacold, 
+time = "Time", id = "Subject", dependence = "AR1R", integration = "cubature")
 summary (mod1R.c)
 }
 

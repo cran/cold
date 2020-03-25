@@ -47,7 +47,6 @@ LogL.pss0MC<- function(parameters, X, Z, data,M,trace)
   cumti.repl<-cumsum(ti.repl)
   n.cases<- as.integer(length(ti.repl))
   y<-data[[2]]
-  counts<-data[[3]]
   logL<-as.double(0)
   k1<-1
   omega<-as.double(param[length(param)])
@@ -62,7 +61,7 @@ LogL.pss0MC<- function(parameters, X, Z, data,M,trace)
  
     z<- loglik1(param=parameters,X=X[k1:k2,],y=y[k1:k2],M=M, bj.m=bj.m)
     
-    logL<-logL+counts[i]*z
+    logL<-logL+ z
 
     k1<-k2+1
   }

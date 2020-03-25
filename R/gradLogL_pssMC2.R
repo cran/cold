@@ -73,7 +73,7 @@ gradLogL.pssMC2<- function(parameters, X, Z, data, M, trace)
     {n.grad<- (s.grad)
     n.omega1<- exp(omega1)*(s.prod1)
     n.omega2<- exp(omega2)*(s.prod2)
-    L<-Lik}
+    L<- 1e-150}
     
     else if (M1!="1") 
     {n.grad<- (s.grad/(M1-1))
@@ -89,7 +89,6 @@ gradLogL.pssMC2<- function(parameters, X, Z, data, M, trace)
   cumti.repl <- cumsum(ti.repl)
   n.cases <- length(ti.repl)
   y <- data[[2]]
-  counts <- data[[3]]
   derivatives<-rep(as.double(0),length(param))
   der.grad<-rep(as.double(0),(length(param)-2))
   der.omega1<-der.omega2<-as.double(0)
@@ -97,6 +96,7 @@ gradLogL.pssMC2<- function(parameters, X, Z, data, M, trace)
   logL<-0
   omega1<-as.double(param[length(param)-1])
   omega2<-as.double(param[length(param)])
+  mvcov<-matrix(as.double(0),2,2)
   b1j.m<-rep(as.double(0),M)
   b2j.m<-rep(as.double(0),M)
   pos.r2<-as.double(0)
@@ -112,9 +112,10 @@ gradLogL.pssMC2<- function(parameters, X, Z, data, M, trace)
   {
     k2<-cumti.repl[i]
     set.seed(10*i)
-    b1j.m<-rnorm(M,0,exp(omega1/2))
-    #     set.seed(100*i)
-    b2j.m<-rnorm(M,0,exp(omega2/2))   
+    mvcov<- matrix(c(exp(omega1), 0, 0, exp(omega2)),2)
+    bi<-mvrnorm(n=M, c(0,0), mvcov)
+    b1j.m<-bi[,1]
+    b2j.m<-bi[,2]  
     
     numerator<-gradient(param=parameters, X=X[k1:k2,], y=y[k1:k2], M=M, 
                         b1j.m=b1j.m, b2j.m=b2j.m,  pos.r2=pos.r2)
@@ -123,15 +124,15 @@ gradLogL.pssMC2<- function(parameters, X, Z, data, M, trace)
     
     {if  (z=="Inf" ) z<-(1e+150)}
     
-    #      logL<-logL+ counts[i]*(z) #log-likelihood for N individuals
-    
+#         logL<-logL+ log(z) #log-likelihood for N individuals
+
     for (k in 1:(length(param)-2))
     {
       if (is.na(numerator[k]) | is.na(numerator[k]-Inf)) numerator[k]<-0
       if (numerator[k]=="Inf")  numerator[k]<- (1e+150)
       if (numerator[k]=="-Inf") numerator[k]<- (-1e+150)
       
-      der.grad[k]<-der.grad[k] + counts[i]*(numerator[k]/z)
+      der.grad[k]<-der.grad[k] + (numerator[k]/z)
       k<-k+1
     }
     
@@ -143,13 +144,13 @@ gradLogL.pssMC2<- function(parameters, X, Z, data, M, trace)
     if (numerator[length(param)]=="Inf")  numerator[length(param)]<- (1e+150)
     if (numerator[length(param)]=="-Inf") numerator[length(param)]<- (-1e+150)
     
-    der.omega1<-der.omega1 + counts[i]*(numerator[length(param)-1]/z)
-    der.omega2<-der.omega2 + counts[i]*(numerator[length(param)]/z)
+    der.omega1<-der.omega1 + (numerator[length(param)-1]/z)
+    der.omega2<-der.omega2 + (numerator[length(param)]/z)
     
     k1<-k2+1
   }
   
   derivatives<-c(der.grad,der.omega1,der.omega2)
-  
+
   return(-derivatives)
 }

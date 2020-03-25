@@ -17,10 +17,10 @@
 }
 
 \examples{
-#####  data= seizure
+#####  data = seizure
 
-seiz1M<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, start=NULL, 
-dependence="AR1")
+seiz1M <- cold(y ~ lage + lbase + v4 + trt + trt:lbase, data = seizure, 
+start = NULL, dependence = "AR1")
 
 coeftest(seiz1M)
 }

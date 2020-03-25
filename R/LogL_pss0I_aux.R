@@ -18,7 +18,6 @@ LogL.pss0I.aux<- function(parameters, X, data, trace)
 ##### Estimate bi 
     m<-glm(as.numeric(y)~ offset(eta) , family=poisson)
 
-
     bi<-coef(m)[1]
     beta[1]<-beta[1]+bi   
     y[is.na(y)]<-(-1)
@@ -37,7 +36,6 @@ LogL.pss0I.aux<- function(parameters, X, data, trace)
     
    i.fit<-x%*%beta
 
-    
     return(list(loglik=results[[1]], fit=i.fit, bi.est=bi))}
   
   if(trace)	cat(paste("\t",(format(parameters[length(parameters)], digit=4)), collapse=" "), "\t")
@@ -48,14 +46,12 @@ LogL.pss0I.aux<- function(parameters, X, data, trace)
   cumti.repl<-cumsum(ti.repl)
   n.cases<- length(ti.repl)
   y<-data[[2]]
-  counts<-data[[3]]
   fitted<-as.double(rep(0,length(y)))
   res<-as.double(rep(0,length(y)))
   bi.estimate<-as.double(rep(0,length(n.cases)))
   logL1<-as.double(0)
   
-
- 
+  
   k1<-1  
   for (i in 1:n.cases)
   {

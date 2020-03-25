@@ -1,4 +1,4 @@
-LogL.pss0Ic<- function(parameters, X, data,trace, cublim)
+LogL.pss0Ic<- function(parameters, X,Z, data,trace, cublim)
 {
   
   loglik<- function(param, X, y)
@@ -56,7 +56,7 @@ LogL.pss0Ic<- function(parameters, X, data,trace, cublim)
   cumti.repl<-cumsum(ti.repl)
   n.cases<- as.integer(length(ti.repl))
   y<-data[[2]]
-  counts<-data[[3]]
+#  counts<-data[[3]]
   logL1<-0
   k1<-1
   
@@ -73,7 +73,7 @@ LogL.pss0Ic<- function(parameters, X, data,trace, cublim)
     {if  (z[[1]]=="Inf" )  z[[1]]<-(1e+150)}
     
     #logL1 gives the log-likelihood
-    logL1<-logL1+counts[i]*log(z[[1]]*(1/(sqrt(2*pi)*exp(omega1/2))))
+    logL1<-logL1+log(z[[1]]*(1/(sqrt(2*pi)*exp(omega1/2))))
     
     k1<-k2+1
   }

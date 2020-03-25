@@ -15,7 +15,7 @@
 #####  data = seizure
 
 ### indR
-seiz0R<-cold(y ~ lage + lbase + trt + trt:lbase + v4, random = ~ 1,
+seiz0R <- cold(y ~ lage + lbase + trt + trt:lbase + v4, random = ~ 1,
         data = seizure, dependence = "indR")
 
 vareff(seiz0R)

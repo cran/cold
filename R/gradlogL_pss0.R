@@ -31,7 +31,6 @@ gradlogL.pss0<- function(parameters, X,data, trace)
   cumti.repl <- cumsum(ti.repl)
   n.cases <- length(ti.repl)
   y <- data[[2]]
-  counts <- data[[3]]
   gr<-0
   k1 <- 1
   
@@ -40,7 +39,7 @@ gradlogL.pss0<- function(parameters, X,data, trace)
     k2<-cumti.repl[i]
     u<-gradient (param=parameters,X=X[k1:k2,], y=y[k1:k2])
     
-    gr<-gr+counts[i] * u
+    gr<-gr+u
     k1<-k2+1
   }
   

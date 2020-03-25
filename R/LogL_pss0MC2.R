@@ -48,9 +48,9 @@ LogL.pss0MC2<- function(parameters, X, Z, data,M,trace)
   cumti.repl<-cumsum(ti.repl)
   n.cases<- as.integer(length(ti.repl))
   y<-data[[2]]
-  counts<-data[[3]]
   logL<-as.double(0)
   k1<-1
+  mvcov<-matrix(as.double(0),2,2)
   b1j.m<-rep(as.double(0),M)
   b2j.m<-rep(as.double(0),M)
   pos.r2<-as.double(0)
@@ -66,14 +66,15 @@ LogL.pss0MC2<- function(parameters, X, Z, data,M,trace)
   for (i in 1:n.cases)
   { k2<-cumti.repl[i]
   set.seed(10*i)
-  b1j.m<-rnorm(M,0,exp(omega1/2))
-  #     set.seed(100*i)
-  b2j.m<-rnorm(M,0,exp(omega2/2))   
+  mvcov<- matrix(c(exp(omega1), 0, 0, exp(omega2)),2)
+  bi<-mvrnorm(n=M, c(0,0), mvcov)
+  b1j.m<-bi[,1]
+  b2j.m<-bi[,2] 
   
   z<- loglik1(param=parameters,X=X[k1:k2,],y=y[k1:k2],M=M,b1j.m=b1j.m, 
               b2j.m=b2j.m, pos.r2=pos.r2)
   
-  logL<-logL+counts[i]*z
+  logL<-logL+ z
   
   k1<-k2+1
   }

@@ -18,29 +18,29 @@
 data(datacold)
 
 mod0<- cold(z~Time*Treatment, data=datacold, time="Time", 
-id="Subject", aggregate=Treatment, dependence="ind")
+id="Subject", dependence="ind")
 summary (mod0)
 
 modI<- cold(z~Time*Treatment, data=datacold, time="Time", 
-id="Subject", aggregate=Treatment, dependence="AR1")
+id="Subject",  dependence="AR1")
 summary (modI)
 
 anova(mod0,modI)
 
-plot(modI,which=1,xlab="Time (weeks)",ylab="Count",main="Model AR1")
+plot(modI,which=1,factor=Treatment,xlab="Time (weeks)", 
+ylab="Count", main="Model AR1")
 
 
 ### independent with random intercept 
-mod0R<- cold(z~Time*Treatment, random=~1,data=datacold, time="Time", 
-id="Subject", aggregate=Treatment, dependence="indR")
+mod0R <- cold(z ~ Time * Treatment, random = ~ 1, data = datacold, 
+time = "Time", id = "Subject", dependence = "indR")
 summary(mod0R)
 
 ### independent with random intercept (dependence="indR") 
 ### using cubature (integration = "cubature")
 \donttest{
-mod0R.C<- cold(z~Time*Treatment, random=~1,data=datacold, time="Time", 
-id="Subject", aggregate=Treatment, dependence="indR",
-integration = "cubature")
+mod0R.C <- cold(z ~ Time * Treatment, random = ~ 1, data = datacold, 
+time = "Time", id = "Subject", dependence = "indR", integration = "cubature")
 summary(mod0R.C)
 
 randeff(mod0R.C)
@@ -51,19 +51,17 @@ randeff(mod0R.C)
 ### dependence="indR2" 
 ## It takes a long time to run
 \donttest{ 
-## Using Monte Carlo method (integration="MC")
-mod0R2MC<-cold(z~Time*Treatment, random = ~ 1 + Time, data=datacold, 
-time="Time", id="Subject", dependence="indR2", integration="MC", 
-M=8000, trace=TRUE)
+## Using Monte Carlo method (integration = "MC")
+mod0R2MC <- cold(z ~ Time * Treatment, ~ 1 + Time, datacold, time = "Time",
+id = "Subject", dependence = "indR2", integration = "MC")
 
 summary (mod0R2MC)
 
 randeff(mod0R2MC)
 
-## Using cubature (integration="cubature")
-mod0R2C<-cold(z~Time*Treatment, random = ~ 1 + Time, data=datacold, 
-time="Time", id="Subject", dependence="indR2", integration="cubature", 
-trace=TRUE)
+## Using cubature (integration = "cubature")
+mod0R2C<-cold(z ~ Time * Treatment, random = ~ 1 + Time, data = datacold, 
+time = "Time", id = "Subject", dependence = "indR2", integration = "cubature")
 summary (mod0R2C)
 }
 

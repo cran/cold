@@ -1,4 +1,4 @@
-LogL.pss0Ic2<- function(parameters, X, data, trace, cublim)
+LogL.pss0Ic2<- function(parameters, X, Z, data, trace, cublim)
 {
   
   loglik<- function(param, X, y)
@@ -33,7 +33,7 @@ LogL.pss0Ic2<- function(parameters, X, data, trace, cublim)
   }
   
   
-  int0c<-function(v,parameters,X,y)
+  int0c<-function(v,parameters,X,y,pos.r2)
   {
     FUN<-get("loglik", inherits=TRUE)
     
@@ -44,18 +44,21 @@ LogL.pss0Ic2<- function(parameters, X, data, trace, cublim)
     k<-length(v)
     k1<-as.double(ncol(v))
     z<-as.vector(length(k1))
-    
+
     #creates a expression to integrate in a vector of length(v)
     for(j in 1:k1)
     {param[1]<-as.double(parameters[1]+v[1,j])
-    param[2]<-as.double(parameters[2]+v[2,j])
+    param[pos.r2]<-as.double(parameters[pos.r2]+v[2,j])
+    
     z[j]<-FUN(param,X,y)
     }
     
     a<- exp (z- ((v[1,]^2/(2*exp(omega1))) + (v[2,]^2/(2*exp(omega2))) ))
     
-    am<- matrix(a,byrow=TRUE)
+#    am<- matrix(a,byrow=TRUE)
     
+    am<- matrix(a,ncol=ncol(v))
+
     return(am)
   }
   
@@ -69,14 +72,30 @@ LogL.pss0Ic2<- function(parameters, X, data, trace, cublim)
   cumti.repl<-cumsum(ti.repl)
   n.cases<- as.integer(length(ti.repl))
   y<-data[[2]]
-  counts<-data[[3]]
   logL1<-0
   k1<-1
+  pos.r2<-as.double(0)
   
   l1i<-as.double(cublim$l1i)
   l1s<-as.double(cublim$l1s)
   l2i<-as.double(cublim$l2i)
   l2s<-as.double(cublim$l2s)
+  
+  names.Z <- dimnames(Z)[[2]]  #new for random
+  names.X <- dimnames(X)[[2]]
+  
+  for (i in 2:ncol(X))
+  { if (!is.na(match(names.Z[2],names.X[i]))) pos.r2<-i  }
+  
+  if (omega1 > 10 | omega2 > 10 )
+  { logL1<-NaN
+  if(trace)	cat(paste("\t",(format( logL1,digit=6)), collapse=" "), "\n")
+  return(NaN)}
+  
+  if (omega1 < -10 | omega2 < -10 )
+  { logL1<-NaN
+  if(trace)	cat(paste("\t",(format( logL1,digit=6)), collapse=" "), "\n")
+  return(NaN)}
   
   for (i in 1:n.cases)
   {
@@ -84,7 +103,8 @@ LogL.pss0Ic2<- function(parameters, X, data, trace, cublim)
     
     z<- hcubature (int0c,lowerLimit=c(l1i*exp(omega1/2),l2i*exp(omega2/2)),
                    upperLimit=c(l1s*exp(omega1/2),l2s*exp(omega2/2)),
-                   parameters=parameters,X=X[k1:k2,], y=y[k1:k2],vectorInterface=TRUE)
+                   parameters=parameters,X=X[k1:k2,], y=y[k1:k2],vectorInterface=TRUE, 
+                   pos.r2=pos.r2)
     
     {if  (z[[1]]=="0" )  z[[1]]<-(1e-300)}
     if  (z[[1]]=="Inf" )  z[[1]]<-(1e+150)
@@ -92,8 +112,8 @@ LogL.pss0Ic2<- function(parameters, X, data, trace, cublim)
 
     if(z[[4]]==0)
       #logL1 gives the log-likelihood
-      logL1<-logL1+counts[i]*log(z[[1]]*(1/((2*pi)*exp(omega1/2)*exp(omega2/2))))
-    
+      logL1<-logL1+log(z[[1]]*(1/((2*pi)*exp(omega1/2)*exp(omega2/2))))
+
     k1<-k2+1
   }
   

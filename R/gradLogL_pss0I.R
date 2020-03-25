@@ -63,7 +63,6 @@ gradLogL.pss0I <- function(parameters, X,data,integrate,trace)
   cumti.repl<-cumsum(ti.repl)
   n.cases<- length(ti.repl)
   y<-data[[2]]
-  counts<-data[[3]]
   dgr<-as.double(rep(0,nparam-1))
   dvar<-0
   k1<-1
@@ -81,12 +80,12 @@ gradLogL.pss0I <- function(parameters, X,data,integrate,trace)
     for (j in 1:(nparam-1))
     { 
       if (is.na(num[j]) | is.na(num[j]-Inf)) num[j]<-0 
-      dgr[j]<-dgr[j]+counts[i]*(num[j]/z)
+      dgr[j]<-dgr[j]+(num[j]/z)
     }
     
     #using the chain rule
     if (is.na(num[nparam]) | is.na(num[nparam]-Inf)) num[nparam]<- 0
-    dvar<-dvar+counts[i]*(num[nparam]/z)*exp(omega1)
+    dvar<-dvar+(num[nparam]/z)*exp(omega1)
     k1<-k2+1
   }
   

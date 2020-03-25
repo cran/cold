@@ -9,12 +9,14 @@ CCCCC
       DIMENSION theta(t1), f(0:130)
 C      DIMENSION theta(t1), f(0:200)
       
-      nu= theta(t1)-rho*theta(t0)
-C     if (nu.le.0.0) return
-      if(nu.le.0.0) then
-      call dblepr('Parameters values unfeasible',28,nu,1)
-c      return  !coloquei comentário  a 11-07-19 p ver se não dá erro
-      end if
+      nu=theta(t1)-rho*theta(t0)
+      fpss=1.0d0 ! New 25/03/2020
+      if (nu.le.0.0) return 
+
+C      if(nu.le.0.0) then ! New 25/03/2020
+C      call dblepr('Parameters values unfeasible',28,nu,1) 
+C      return
+C      end if 
 
       maxr=min(k1,k0)
       prob=0.0d0

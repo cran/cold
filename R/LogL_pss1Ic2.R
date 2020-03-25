@@ -1,4 +1,4 @@
-LogL.pss1Ic2<- function(parameters, X, data, trace,cublim)
+LogL.pss1Ic2<- function(parameters, X, Z, data, trace,cublim)
 {
   
   loglik<- function(param, X, y)
@@ -28,24 +28,22 @@ LogL.pss1Ic2<- function(parameters, X, data, trace,cublim)
     m.theta<-exp(x%*%beta)
     for (i in 2:n)
     {vt[i-1]<- m.theta[i]-rho*m.theta[i-1]}
-    
-      #      if(any(vt < 0)) cat("vt contains negative values\n")
-    
+
     if ( all(vt > 0) &  all(vt != Inf) &  !anyNA(vt) )
     {results <- .Fortran("psslik",logL,beta,rho,
-                         npar,x,y,theta,work,n,fact,link,PACKAGE="cold")
+                        npar,x,y,theta,work,n,fact,link,PACKAGE="cold")
     
     if  (results[[1]]=="NaN" ) results[[1]]<-(-Inf)
     if  (results[[1]]=="Inf" ) results[[1]]<-(-Inf)
+   
+    Lik<-results[[1]]  }
+   
+    else Lik<-(-Inf)
     
-    Lik<-results[[1]]
-    }
-  
-    return(Lik)
-  }
+    return(Lik) }
   
   
-  int1c<-function(v,parameters,X,y)
+  int1c<-function(v,parameters,X,y,pos.r2)
   {
     FUN<-get("loglik", inherits=TRUE)
     
@@ -55,15 +53,15 @@ LogL.pss1Ic2<- function(parameters, X, data, trace,cublim)
     omega2<-as.double(parameters[nparam])
     k<-length(v)
     k1<-as.double(ncol(v))
-    z<-as.vector(rep(0,k1))
+    z<-as.vector(length(k1))
     
     #creates a expression to integrate in a vector of length(v)
     for(j in 1:k1)
     {param[1]<-as.double(parameters[1]+v[1,j])
-    param[2]<-as.double(parameters[2]+v[2,j])
+    param[pos.r2]<-as.double(parameters[pos.r2]+v[2,j])
     z[j]<-FUN(param,X,y)
     }
-    
+
     a<- exp (z- ((v[1,]^2/(2*exp(omega1))) + (v[2,]^2/(2*exp(omega2))) ))
     
     am<- matrix(a,ncol=ncol(v))
@@ -82,9 +80,9 @@ LogL.pss1Ic2<- function(parameters, X, data, trace,cublim)
   cumti.repl<-cumsum(ti.repl)
   n.cases<- as.integer(length(ti.repl))
   y<-data[[2]]
-  counts<-data[[3]]
   logL1<-0
   k1<-1
+  pos.r2<-as.double(0)
   npar <- as.integer(length(parameters))
   rho<- as.double(parameters[npar-2])
   
@@ -93,12 +91,28 @@ LogL.pss1Ic2<- function(parameters, X, data, trace,cublim)
   l2i<-as.double(cublim$l2i)
   l2s<-as.double(cublim$l2s)
   
-  if (rho <= 0 | rho >= 0.99 )
+  names.Z <- dimnames(Z)[[2]]  #new for random
+  names.X <- dimnames(X)[[2]]
+  
+  for (i in 2:ncol(X))
+  { if (!is.na(match(names.Z[2],names.X[i]))) pos.r2<-i  }
+  
+  if (omega1 > 10 | omega2 > 10 )
   { logL1<-NaN
   if(trace)	cat(paste("\t",(format( logL1,digit=6)), collapse=" "), "\n")
   return(NaN)}
   
-  else if (rho > 0 &  rho < 0.99 )
+  if (omega1 < -10 | omega2 < -10 )
+  { logL1<-NaN
+  if(trace)	cat(paste("\t",(format( logL1,digit=6)), collapse=" "), "\n")
+  return(NaN)}
+  
+  if (rho < 0 | rho >= 0.99 )
+  { logL1<-NaN
+  if(trace)	cat(paste("\t",(format( logL1,digit=6)), collapse=" "), "\n")
+  return(NaN)}
+  
+  else if (rho >= 0 &  rho < 0.99 )
   {
     for (i in 1:n.cases)
     {
@@ -106,15 +120,17 @@ LogL.pss1Ic2<- function(parameters, X, data, trace,cublim)
       
       z<- hcubature (int1c,lowerLimit=c(l1i*exp(omega1/2),l2i*exp(omega2/2)),
                      upperLimit=c(l1s*exp(omega1/2),l2s*exp(omega2/2)),
-                     parameters=parameters,X=X[k1:k2,], y=y[k1:k2],vectorInterface=TRUE)
-      
+                     parameters=parameters,X=X[k1:k2,], y=y[k1:k2],
+                     vectorInterface=TRUE, pos.r2=pos.r2)
+
     {if  (z[[1]]=="0" )  z[[1]]<-(1e-300)}
      if  (z[[1]]=="Inf" )  z[[1]]<-(1e+150)
       if  (z[[1]]=="NaN" )  z[[1]]<-(1e-150)
+#      if  (z[[1]]>700)  z[[1]]<-700
       
       if(z[[4]]==0)
         #logL1 gives the log-likelihood
-        logL1<-logL1+counts[i]*log(z[[1]]*(1/(2*pi*exp(omega1/2)*exp(omega2/2))))
+        logL1<-logL1+ log(z[[1]]*(1/(2*pi*exp(omega1/2)*exp(omega2/2))))
       
       k1<-k2+1
     }

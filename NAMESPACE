@@ -13,3 +13,4 @@ importFrom("stats", "coef", "contrasts", "glm", "model.matrix",
              "na.omit", "optim", "pchisq", "pnorm", "poisson",
            "rnorm", "terms")
 importFrom("cubature","hcubature")
+importFrom("MASS","mvrnorm")

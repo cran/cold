@@ -38,7 +38,6 @@ LogL.pss0I<- function(parameters, X, data, integrate, trace)
   cumti.repl<-cumsum(ti.repl)
   n.cases<- as.integer(length(ti.repl))
   y<-data[[2]]
-  counts<-data[[3]]
   logL1<-0
   k1<-1
   
@@ -51,7 +50,7 @@ LogL.pss0I<- function(parameters, X, data, integrate, trace)
 #    {if  (z=="Inf" )  z<-(1e+150)}
     {if  (z=="Inf" )  z<-(1e+300)} # New
 
-    logL1<-logL1+counts[i]*log(z*(1/(sqrt(2*pi)*exp(omega1/2))))
+    logL1<-logL1+ log(z*(1/(sqrt(2*pi)*exp(omega1/2))))
     k1<-k2+1
   }
   if(trace)	cat(paste("\t",(format( logL1,digit=6)), collapse=" "), "\n")

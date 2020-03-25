@@ -15,7 +15,7 @@
      *rlist(limit)
 
 
-      COMMON/param/x1,theta1,work1,y1,
+      COMMON/param1/x1,theta1,work1,y1,
      *beta1,bt1,m,mpar,omega1,rho1,link1,maxy1
 
 

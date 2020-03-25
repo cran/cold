@@ -6,7 +6,7 @@ setClass("summary.cold", representation(coefficients = "matrix", se = "matrix", 
 setClass("cold", representation(coefficients = "matrix", se = "matrix", covariance = "matrix", correlation="matrix",
                                 log.likelihood="numeric", message ="integer",n.cases="numeric", ni.cases="numeric", aic="numeric",
                                 Fitted="numeric",  bi.estimate="matrix",Fitted.av="numeric", Time="numeric", model.matrix= "matrix", y.matrix="matrix", 
-                                random.matrix="matrix", subset.data="data.frame",final.data="data.frame", y.av="numeric", f.value="factor", data.id="numeric",
+                                random.matrix="matrix", subset.data="data.frame",final.data="data.frame", y.av="numeric", data.id="numeric",
                                 call="language"))
 
 setGeneric("getAIC",def=function(object) standardGeneric("getAIC"))
@@ -27,11 +27,13 @@ setGeneric("model.mat",def=function(object) standardGeneric("model.mat"))
 
 setGeneric("coeftest",def=function(object) standardGeneric("coeftest"))
 
+setGeneric("resid",def=function(object) standardGeneric("resid"))
 
-cold<-function(formula = formula(data),random = ~0,data,id,time,subSET,
-               dependence="ind",start=NULL,method="BFGS",integration="QUADPACK", 
-               M=6000,control=coldControl(),integrate=coldIntegrate(),
-               cublim=coldcublim(),aggregate=FALSE,trace=FALSE)
+
+cold<-function(formula,random=~0,data,id="id",time="time",subSET,
+               dependence="ind",start=NULL,method="BFGS", 
+               integration="QUADPACK",M=6000,control=coldControl(),
+               integrate=coldIntegrate(),cublim=coldcublim(),trace=FALSE)
 {
   # *****************DEFINITION OF INTERNAL FUNCTIONS ******************
 
@@ -75,8 +77,6 @@ cold<-function(formula = formula(data),random = ~0,data,id,time,subSET,
 	expr2 <- terms(random, data=data) #new for random
 	names.R <- all.vars(expr2)  #new for random
 
-	if(any(is.na(match(var.names, names(data)))))
-		stop("Variables in formula not contained in the data.frame")
 	
 if(!missing(time)) {Time<-as.vector(data[[time]])}
 if (missing(time)) { if (all (is.na(match(names(data), "time")))) stop ("time must be defined")
@@ -86,14 +86,12 @@ if(!missing(id)) {id<-as.vector(data[[id]])}
 if (missing(id)){ if (all(is.na(match(names(data), "id")))) stop ("id must be defined")
 		else id<-as.vector(data$id)}
 
+if(any(is.na(match(var.names, names(data)))))
+	  stop("Variables in formula not contained in the data.frame")
+	
 # select subset if necessary
 	if(!missing(subSET)) {id1 <- eval(substitute(subSET), data)
 			      data<-subset(data, id1)}
-
-	if(!missing(aggregate)) {f.name <- deparse(substitute(aggregate))
-  			f.value <- as.factor(data[[f.name]])}
-
-	if(missing(aggregate)) {f.value<-as.factor(0)}
 
 #returns data of a subset
 subset.data<-data
@@ -117,16 +115,7 @@ subset.data<-data
 	ni.cases <- length(ti.repl)
 	pos.ind<-cumsum(ti.repl)
 
-	counts<-as.vector(0)
-
-	if(is.na(match("counts", names(data))))
-			counts <- data$counts <- rep(1, n.cases)
-		else   {for (i in 1:n.cases)
-			{counts[i]<-data$counts[pos.ind[i]]}
-		}
-
 	final.data <- data
-	var.names <- c(var.names, "counts")
 	data <- data[var.names]
 	n.var <- length(data)
 	Y.resp <- as.vector(data[[response]])
@@ -155,25 +144,32 @@ subset.data<-data
 		else  if (dependence=="indR2")  init<-c(0,0)
 		else  if (dependence=="AR1R2")  init<-c(0.5,0,0)
 
+		if (dependence=="indR2"  &&  integration=="QUADPACK") 
+		  stop ("integration argument must be MC or cubature")
+		else if (dependence=="AR1R2"  &&  integration=="QUADPACK") 
+      stop ("integration argument must be MC or cubature")
+
+		
 		if(is.null(start) && dependence!="ind")
-			start <- c(glm(formula, data1,family=poisson, weights=counts)$coefficients, init)
+			start <- c(glm(formula, data1,family=poisson)$coefficients, init)
 		else if(!is.null(start) && dependence!="ind")
-			start <- c(glm(formula, data1,family=poisson, weights=counts, maxit=100)$coefficients, start)
-		else if (dependence=="ind") start <- c(glm(formula, data1, family=poisson, weights=counts)$coefficients)
+			start <- c(glm(formula, data1,family=poisson, maxit=100)$coefficients, start)
+		else if (dependence=="ind") start <- c(glm(formula, data1, family=poisson)$coefficients)
 
    if (any(is.na(start))) stop("starting values produced by glm contains NA")
 
 	id.not.na<-rep(TRUE,n.tot)
-	X <- model.matrix(expr1, data, contrasts)
+	X <- model.matrix(expr1, data)
 	names.output <- dimnames(X)[[2]]
-	Z <- model.matrix(expr2, data, contrasts)  #new for random
+	Z <- model.matrix(expr2, data)  #new for random
 	names.Z <- dimnames(Z)[[2]]  #new for random
 	sum.ti <- sum(ti.repl)
-	data <- list(ti.repl, data[[response]], counts)
-	data2<-list(ti.repl, data2[[response]], counts)
+	data <- list(ti.repl, data[[response]])
+	data2<-list(ti.repl, data2[[response]])
 	p <- dim(X)[2] + 1
 	F.aux<-as.double(rep(0,length(data[[2]])))
-	
+
+
 	if (dependence=="ind")
 	{	if(trace)	cat("\t log.likelihood\n")
 	temp<-optim(par= start, fn=logL.pss0, gr=gradlogL.pss0, method=method,
@@ -185,7 +181,7 @@ subset.data<-data
 	else  if (dependence=="indR"& integration=="cubature")
 	{	if(trace)	cat("\n omega \t log.likelihood\n")
 	temp <- optim(par = start, fn =LogL.pss0Ic,gr = gradLogL.pss0Ic, method=method,
-	data = data, X = X, trace=trace, cublim=cublim)}
+	data = data, X = X, Z = Z, trace=trace, cublim=cublim)}
 	else  if (dependence=="indR"& integration=="MC")
 	{	if(trace)	cat("\n omega \t log.likelihood\n")
 	temp <- optim(par = start, fn =LogL.pss0MC,gr = gradLogL.pss0MC,  method=method,
@@ -201,7 +197,7 @@ subset.data<-data
 	else  if (dependence=="AR1R"& integration=="cubature")
 	{	if(trace)	cat("\n rho\t omega\t log.likelihood\n")
 	temp <- optim(par = start, fn =LogL.pss1Ic,gr = gradLogL.pss1Ic,  method=method,
-	 data = data, X = X, trace=trace, cublim=cublim)}
+	 data = data, X = X, Z = Z, trace=trace, cublim=cublim)}
 	else  if (dependence=="AR1R"& integration=="MC")
 	{	if(trace)	cat("\n rho\t omega\t log.likelihood\n")
 	 temp <- optim(par = start, fn =LogL.pssMC1,gr = gradLogL.pssMC,  method=method,
@@ -209,7 +205,7 @@ subset.data<-data
 	else  if (dependence=="indR2"& integration=="cubature")
 	{	if(trace)	cat("\n  omega1\t  omega2\t log.likelihood\n")
 	  temp <- optim(par = start, fn =LogL.pss0Ic2,gr = gradLogL.pss0Ic2, method=method,
-	  data = data, X = X, trace=trace, cublim=cublim)}
+	  data = data, X = X, Z = Z, trace=trace, cublim=cublim)}
 	else  if (dependence=="indR2"& integration=="MC")
 	{	if(trace)	cat("\n  omega1\t  omega2\t log.likelihood\n")
 	  temp <- optim(par = start, fn =LogL.pss0MC2, gr = gradLogL.pss0MC2,  method=method,
@@ -217,7 +213,7 @@ subset.data<-data
 	else  if (dependence=="AR1R2"& integration=="cubature")
 	{	if(trace)	cat("\n rho\t  omega1\t  omega2\t  log.likelihood\n")
 	  temp <- optim(par = start, fn =LogL.pss1Ic2,gr = gradLogL.pss1Ic2,  method=method,
-	  data = data, X = X, trace=trace, cublim=cublim)}
+	  data = data, X = X, Z = Z,trace=trace, cublim=cublim)}
 	else  if (dependence=="AR1R2"& integration=="MC")
 	{	if(trace)	cat("\n rho\t  omega1\t  omega2\t  log.likelihood\n")
 	  temp <- optim(par = start, fn =LogL.pssMC2,gr = gradLogL.pssMC2,  method=method,
@@ -225,6 +221,7 @@ subset.data<-data
 	
 	coefficients <- temp$par
 	log.lik <-  - temp$value
+	
 	if (trace)
 	  cat("Convergence reached. Computing the information matrix now\n")
 
@@ -233,7 +230,7 @@ subset.data<-data
 	else  if (dependence=="indR"& integration=="QUADPACK")
 	Info <- num.infoI(coefficients, "gradLogL.pss0I", X, data, integrate=integrate)
 	else  if (dependence=="indR"& integration=="cubature")
-	Info <- num.infoIc(coefficients, "gradLogL.pss0Ic", X, data, cublim=cublim)
+	Info <- num.infoIc(coefficients, "gradLogL.pss0Ic", X, Z, data, cublim=cublim)
 	else  if (dependence=="indR"& integration=="MC")
 	Info <- num.infoMC(coefficients, "gradLogL.pss0MC", X, Z, data, M=M)
 	else if (dependence=="AR1")
@@ -241,15 +238,15 @@ subset.data<-data
 	else  if (dependence=="AR1R"& integration=="QUADPACK")
 	Info <- num.infoI(coefficients, "gradLogL.pss1I", X, data, integrate=integrate)
 	else  if (dependence=="AR1R"& integration=="cubature")
-	  Info <- num.infoIc(coefficients, "gradLogL.pss1Ic", X, data, cublim=cublim)
+	  Info <- num.infoIc(coefficients, "gradLogL.pss1Ic", X, Z, data, cublim=cublim)
 	else  if (dependence=="AR1R"& integration=="MC")
 	  Info <- num.infoMC(coefficients, "gradLogL.pssMC", X, Z, data, M=M)
 	else  if (dependence=="indR2"& integration=="cubature")
-	  Info <- num.infoIc(coefficients, "gradLogL.pss0Ic2", X, data, cublim=cublim)
+	  Info <- num.infoIc(coefficients, "gradLogL.pss0Ic2", X, Z, data, cublim=cublim)
 	else  if (dependence=="indR2"& integration=="MC")
 	  Info <- num.infoMC(coefficients, "gradLogL.pss0MC2", X, Z, data, M=M)
 	else  if (dependence=="AR1R2"& integration=="cubature")
-	  Info <- num.infoIc(coefficients, "gradLogL.pss1Ic2", X, data, cublim=cublim)
+	  Info <- num.infoIc(coefficients, "gradLogL.pss1Ic2", X, Z, data, cublim=cublim)
 	else  if (dependence=="AR1R2"& integration=="MC")
 	  Info <- num.infoMC(coefficients, "gradLogL.pssMC2", X, Z, data, M=M)
 
@@ -339,7 +336,7 @@ cl<- new("cold", coefficients = coefficients, se = se, covariance =covariance, c
 	log.likelihood=- temp$value, message = temp$convergence, n.cases=n.cases, ni.cases=ni.cases, aic=aic,
       	Fitted=Fitted, bi.estimate=bi.estimate,Fitted.av=Fitted.av, Time=Time, 
 	      model.matrix=X,y.matrix=y.matrix, random.matrix=Z, subset.data=subset.data, final.data=final.data,
-	      y.av=y.av, f.value=f.value,data.id=id,call=call)
+	      y.av=y.av, data.id=id, call=call)
 
 }
 

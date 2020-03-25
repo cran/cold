@@ -31,7 +31,6 @@ logL.pss0 <- function(parameters, X, data, trace)
   cumti.repl<-cumsum(ti.repl)
   n.cases<- length(ti.repl)
   y<-data[[2]]
-  counts<-data[[3]]
   logL<-0
   k1<-1
   
@@ -40,7 +39,7 @@ logL.pss0 <- function(parameters, X, data, trace)
     k2<-cumti.repl[i]
     z<- loglik1(param=parameters,X=X[k1:k2,],y=y[k1:k2],trace=trace)
     
-    logL<-logL+counts[i]*z
+    logL<-logL+ z
     k1<-k2+1
   }
   if(trace)	cat(paste("\t",(format( logL,digit=6)), collapse=" "), "\n")

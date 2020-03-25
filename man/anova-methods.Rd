@@ -31,22 +31,23 @@ The comparison between two models by anova will only be valid if they are fitted
 \emph{Springer-Verlag.} }
 
 \examples{
-#####  data= seizure
+#####  data = seizure
 
-seiz1<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, start=NULL, 
-dependence="AR1")
+seiz1 <- cold(y ~ lage + lbase + v4 + trt + trt:lbase, data = seizure, 
+start = NULL, dependence = "AR1")
 
-seiz2<-cold(y~lage+lbase+v4+trt, data=seizure, start=NULL, dependence="AR1")
+seiz2 <-cold(y ~ lage + lbase + v4 + trt, data = seizure, start = NULL, 
+dependence = "AR1")
 
-anova(seiz1,seiz2)
+anova(seiz1, seiz2)
 
-#####  data= datacold
+#####  data = datacold
 
-mod0<- cold(z~Time*Treatment, data=datacold, time="Time", id="Subject", 
-aggregate=Treatment, dependence="ind")
+mod0 <- cold(z ~ Time * Treatment, data = datacold, time = "Time", 
+id = "Subject", dependence = "ind")
 
-mod0R<- cold(z~Time*Treatment, random=~1,data=datacold, time="Time", 
-id="Subject", aggregate=Treatment, dependence="indR")
+mod0R <- cold(z  ~ Time * Treatment, random = ~ 1, data = datacold, 
+time = "Time", id = "Subject", dependence = "indR")
 summary(mod0R)
 
 anova(mod0, mod0R)

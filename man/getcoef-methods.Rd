@@ -14,13 +14,13 @@
 #####  data = seizure
 
 ### AR1
-seiz1M<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, start=NULL, 
-dependence="AR1")
+seiz1M <- cold(y ~ lage + lbase + v4 + trt + trt:lbase, data = seizure, 
+start = NULL, dependence = "AR1")
 
 getcoef(seiz1M)
 
 ### indR
-seiz0R<-cold(y ~ lage + lbase + trt + trt:lbase + v4, random = ~ 1,
+seiz0R <- cold(y ~ lage + lbase + trt + trt:lbase + v4, random = ~ 1,
         data = seizure, dependence = "indR")
 
 getcoef(seiz0R)

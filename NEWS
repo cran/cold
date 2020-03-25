@@ -1,5 +1,11 @@
 R package 'cold' News
 -------------------------------
+2020-03-25 version 2.0-1
+- improvements in R code for the random intercept model.
+- amended of R code in functions with cold argument integration="cubature".
+- amended some fortran code.
+
+
 2019-07-13 version 2.0-0
 - improvements in R code in the random intercept model.
 - allows the introduction of two random effects in the linear predictor.

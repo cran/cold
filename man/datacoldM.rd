@@ -20,11 +20,11 @@ data(datacoldM)
  str(datacoldM)
  
 mod0.M<- cold(z~Time*Treatment, data=datacoldM, time="Time", 
-id="Subject", aggregate=Treatment, dependence="ind")
+id="Subject", dependence="ind")
 summary (mod0.M)
 
 mod1.M<- cold(z~Time*Treatment, data=datacoldM, time="Time", 
-id="Subject", aggregate=Treatment, dependence="AR1")
+id="Subject", dependence="AR1")
 summary (mod1.M)
 
 anova(mod0.M,mod1.M)

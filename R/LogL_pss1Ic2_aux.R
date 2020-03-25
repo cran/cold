@@ -59,7 +59,6 @@ LogL.pss1Ic2.aux<- function(parameters, X, Z, data, trace)
   cumti.repl<-cumsum(ti.repl)
   n.cases<- length(ti.repl)
   y<-data[[2]]
-  counts<-data[[3]]
   fitted<-as.double(rep(0,length(y)))
   bi.estimate<-matrix(as.double(0),nrow=n.cases,ncol=2)
   gi.estimate<-as.double(rep(0,length(n.cases)))

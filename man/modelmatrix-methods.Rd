@@ -14,8 +14,8 @@
 #####  data = seizure
 
 ### AR1
-seiz1M<-cold(y~lage+lbase+v4+trt+trt:lbase, data=seizure, start=NULL, 
-dependence="AR1")
+seiz1M <- cold(y ~ lage + lbase + v4 + trt + trt:lbase, data = seizure, 
+start = NULL, dependence = "AR1")
 
 model.mat(seiz1M)[1:20,]
 

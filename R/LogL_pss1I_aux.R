@@ -50,7 +50,6 @@ LogL.pss1I.aux<- function(parameters, X, data, trace)
   cumti.repl<-cumsum(ti.repl)
   n.cases<- length(ti.repl)
   y<-data[[2]]
-  counts<-data[[3]]
   fitted<-as.double(rep(0,length(y)))
   bi.estimate<-as.double(rep(0,length(n.cases)))
   gi.estimate<-as.double(rep(0,length(n.cases)))
@@ -68,5 +67,4 @@ LogL.pss1I.aux<- function(parameters, X, data, trace)
     k1<-k2+1
   }
   
-
   return(list(fit=fitted,bi.est=bi.estimate))}

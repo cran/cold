@@ -9,7 +9,7 @@
       integer y1,i0,i1,np,n,n0,m,mpar,link1,maxy1
       external fpss
 
-      COMMON/param/x1,theta1,work1,y1,
+      COMMON/param1/x1,theta1,work1,y1,
      *beta1,bt1,m,mpar,omega1,rho1,link1,maxy1
 
       data zero/0.0d0/

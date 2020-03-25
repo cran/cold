@@ -22,9 +22,7 @@ gradLogL.pss0MC<- function(parameters, X,Z,data,M,trace)
         fact[i] <- fact[i - 1] * (i - 1)
     fact <- as.double(fact)
     link <- as.integer(1)
-    
     Lik <- as.double(0)
-    
 
     # Monte Carlo method
     for (j in 1:M)
@@ -63,13 +61,11 @@ gradLogL.pss0MC<- function(parameters, X,Z,data,M,trace)
     return(c(n.gradf,n.omega,L))
   }
   
-  
   param<-parameters
   ti.repl <- data[[1]]
   cumti.repl <- cumsum(ti.repl)
   n.cases <- length(ti.repl)
   y <- data[[2]]
-  counts <- data[[3]]
   derivatives<-rep(as.double(0),length(param))
   der.grad<-rep(as.double(0),(length(param)-1))
   der.omega<-as.double(0)
@@ -90,7 +86,7 @@ gradLogL.pss0MC<- function(parameters, X,Z,data,M,trace)
     
     {if  (z=="Inf" ) z<-(1e+150)}
     
-    #      logL<-logL+ counts[i]*(z) #log-likelihood for N individuals
+    #      logL<-logL+ (z) #log-likelihood for N individuals
     
     for (k in 1:(length(param)-1))
     {
@@ -98,7 +94,7 @@ gradLogL.pss0MC<- function(parameters, X,Z,data,M,trace)
       if (numerator[k]=="Inf")  numerator[k]<- (1e+150)
       if (numerator[k]=="-Inf") numerator[k]<- (-1e+150)
       
-      der.grad[k]<-der.grad[k] + counts[i]*(numerator[k]/z)
+      der.grad[k]<-der.grad[k] + (numerator[k]/z)
       k<-k+1
     }
     
@@ -106,7 +102,7 @@ gradLogL.pss0MC<- function(parameters, X,Z,data,M,trace)
     if (numerator[length(param)]=="Inf")  numerator[length(param)]<- (1e+150)
     if (numerator[length(param)]=="-Inf") numerator[length(param)]<- (-1e+150)
     
-    der.omega<-der.omega + counts[i]*(numerator[length(param)]/z)
+    der.omega<-der.omega + (numerator[length(param)]/z)
     
     k1<-k2+1
   }

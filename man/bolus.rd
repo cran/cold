@@ -34,30 +34,31 @@ data(bolus)
 
 ## change the reference class
 contrasts(bolus$group)
-bolus$group<-relevel(factor(bolus$group),ref="2mg")
+bolus$group<-relevel(factor(bolus$group), ref = "2mg")
 contrasts(bolus$group)
 
 ## Weiss, Robert E. (2005) pp 353-356, compare with Table 11.2
 
-bol0R<- cold(y~time+group, random=~1,data=bolus, dependence="indR")
+bol0R <- cold(y ~ time + group, random = ~ 1, data = bolus, 
+dependence = "indR")
 summary (bol0R)
 
 
 ## reparametrization of time 
-bolus$time1<-seq(-1.1,1.1,0.2)
+bolus$time1 <- bolus$time - 6
 
 \donttest{ 
-bol0R1<- cold(y~time1+group, random=~1,data=bolus, dependence="indR")
+bol0R1 <- cold(y ~ time1 + group, random = ~ 1,data = bolus, 
+dependence = "indR")
 summary (bol0R1)
 
-bol1R1<- cold(y~time1+group, random=~1, data=bolus, time="time1", 
-dependence="AR1R", aggregate=group)
+bol1R1 <- cold(y ~ time1 + group, random = ~ 1, data = bolus, 
+time = "time1", dependence = "AR1R")
 summary (bol1R1)
 
-anova(bol0R1,bol1R1)
+anova(bol0R1, bol1R1)
 
-plot(bol1R1,which=1,ylab="Bolus count")
-
+plot(bol1R1, which = 1, factor = group, ylab = "Bolus count")
 
 }
 

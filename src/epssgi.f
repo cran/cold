@@ -9,7 +9,7 @@
      *maxy1,i,k0,k1
       external fpss
 
-      COMMON/param/x1,theta1,work1,y1,
+      COMMON/param1/x1,theta1,work1,y1,
      *beta1,bt1,m,mpar,omega1,rho1,link1,maxy1
 
       data zero/0.0d0/, one/1.0d0/
