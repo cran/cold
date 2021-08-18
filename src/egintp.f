@@ -14,7 +14,7 @@
      *alist(limit),blist(limit),elist(limit),iord(limit),
      *rlist(limit)
 
-      COMMON/param1/x1,theta1,work1,y1,
+      COMMON/param/x1,theta1,work1,y1,
      *beta1,bt1,m,mpar,omega1,rho1,link1,maxy1
 
       do 10 k=1,(npar-1)

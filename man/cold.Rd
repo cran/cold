@@ -10,7 +10,7 @@ M="6000", control=coldControl(), integrate=coldIntegrate(),
 cublim=coldcublim(), trace=FALSE)}
 \arguments{ 
   \item{formula}{a description of the model to be fitted of the form response~predictors.}
-    \item{random}{the predictos that includes random effects of the form response~predictors.}
+  \item{random}{the predictos that includes random effects of the form response~predictors.}
   \item{data}{a \code{data} frame containing the variables in the formula. NA values are allowed. 
   If data is missing, an error message is produced. See "Details".}
   \item{id}{a string that matches the name of the \code{id} variable in \code{data}, 
@@ -83,13 +83,17 @@ considered to be included in the \code{time} argument that plays the role of the
 \value{An object of class \code{\link[=cold-class]{cold}}.}
 
 \references{Azzalini, A. (1994). Logistic regression and other discrete data models for serially correlated observations.  
-\emph{J. Ital. Stat. Society}, 3 (2), 169-179.
+\emph{J. Ital. Stat. Society}, 3 (2), 169-179. 
+doi:10.1007/bf02589225.
 
 \enc{Gonçalves}{Goncalves}, M. Helena (2002). \emph{ Likelihood methods for discrete longitudinal data}. 
 PhD thesis, Faculty of Sciences, University of Lisbon.
   
 \enc{Gonçalves}{Goncalves}, M. Helena, Cabral, M. \enc{Salomé}{Salome}, Ruiz de Villa, M. Carme, Escrich, Eduardo and Solanas, Montse. (2007). 
-Likelihood approach for count data in longitudinal experiments. \emph{Computational statistics and Data Analysis}, 51, 12, 6511-6520.}
+Likelihood approach for count data in longitudinal experiments. \emph{Computational statistics and Data Analysis}, 51, 12, 6511-6520. 
+doi:10.1016/j.csda.2007.03.002.
+
+\enc{Gonçalves}{Goncalves}, M. Helena and Cabral, M. \enc{Salomé}{Salome}. (2021). \code{cold}: An \code{R} Package for the Analysis of Count Longitudinal Data. \emph{Journal of Statistical Software}, 99, 3, 1--24. doi:10.18637/jss.v099.i03.}
   
 \author{M. Helena \enc{Gonçalves}{Goncalves} and M. \enc{Salomé}{Salome} Cabral }
 

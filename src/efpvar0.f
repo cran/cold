@@ -1,7 +1,7 @@
 
       FUNCTION fpvar0(v)
       DOUBLE PRECISION logL,fpvar0,z,v,
-     *bt1,beta1,x1,theta1,work1,omega1
+     *bt1,beta1,rho1,x1,theta1,work1,omega1
       INTEGER m,mpar,y1,maxy1,link1
 
       DIMENSION x1(4000,10),theta1(4000),

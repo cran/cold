@@ -1,7 +1,7 @@
 Package: cold
 Type: Package
 Title: Count Longitudinal Data
-Version: 2.0-1
+Version: 2.0-2
 Author: M. Helena Goncalves and M. Salome Cabral,
   apart from a set of Fortran-77 subroutines written by R. Piessens
   and E. de Doncker, belonging to the suite "Quadpack".
@@ -11,14 +11,15 @@ Description: Performs regression analysis for longitudinal count data,
    individual and two dimensional random effects on the linear predictor. 
    Estimation is via maximization of the exact likelihood of a suitably 
    defined model. Missing values and unbalanced data are allowed; 
-   M. Helena Goncalves et al.(2007) <doi:10.1016/j.csda.2007.03.002>.
+   M. Helena Goncalves et al.(2007). <doi:10.1016/j.csda.2007.03.002>. 
+   M. Helena Goncalves and M. Salome Cabral (2021). <doi:10.18637/jss.v099.i03>.
 Encoding: UTF-8
 NeedsCompilation: yes
 License: GPL (>= 2)
 LazyLoad: yes
 LazyData: yes
-Depends: R (>= 3.1.0), methods, stats, graphics, grDevices, utils,
+Depends: R (>= 3.5.3), methods, stats, graphics, grDevices, utils,
         cubature, MASS
-Packaged: 2020-03-25 12:54:01 UTC; mhgon
+Packaged: 2021-08-17 18:38:16 UTC; mhgon
 Repository: CRAN
-Date/Publication: 2020-03-25 18:20:06 UTC
+Date/Publication: 2021-08-18 08:00:02 UTC

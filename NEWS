@@ -1,5 +1,9 @@
 R package 'cold' News
 -------------------------------
+2020-08-17 version 2.0-2
+- added a new reference with doi:10.18637/jss.v099.i03 into the CITATION file, into the Description file and into cold.Rd and cold-package.Rd files.
+
+
 2020-03-25 version 2.0-1
 - improvements in R code for the random intercept model.
 - amended of R code in functions with cold argument integration="cubature".

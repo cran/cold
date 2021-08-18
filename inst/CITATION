@@ -1,7 +1,22 @@
-citHeader("To cite the cold package in publications use:")
+#citHeader("To cite the cold package in publications #use:")
 
-year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date)
-vers <- paste("Version", meta$Version)
+
+bibentry(bibtype = "Article",
+  title        = "{cold}: An {R} Package for the Analysis of Count Longitudinal Data",
+  author       = c(person(given = c("M.", "Helena"),
+                          family = "Gon\\c{c}alves",
+                          email = "mhgoncal@ualg.pt"),
+                   person(given = c("M.", "Salom\\'{e}"),
+                          family = "Cabral",
+                          email = "salome@fc.ul.pt")),
+  journal      = "Journal of Statistical Software",
+  year         = "2021",
+  volume       = "99",
+  number       = "3",
+  pages        = "1--34",
+  doi          = "10.18637/jss.v099.i03",
+  header       = "To cite cold in publications use:"
+)
 
 
 citEntry(entry = "Article",
@@ -23,6 +38,9 @@ citEntry(entry = "Article",
 )
 
 
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date)
+vers <- paste("Version", meta$Version)
+
 citEntry(entry = "Manual",
          title = "{cold}: A Package for {C}ount {L}ongitudinal {D}ata",
          author = personList(as.person("M. Helena Gon\\c{c}alves"),
@@ -36,6 +54,7 @@ citEntry(entry = "Manual",
 	           vers, ". URL: https://CRAN.R-project.org/package=cold", sep="")
 
 )
+
 
 
 

@@ -38,7 +38,6 @@ caption=c("Individual mean profiles"),cex.caption=1)}
 mod1R <- cold(z ~ Time * Treatment, data = datacold, time = "Time", 
 id = "Subject", dependence = "AR1R")
 
-
 plot(mod1R, which = 1, xlab = "Time(weeks)", ylab = "Count", 
 factor = Treatment, main = "Model AR1R")
 
