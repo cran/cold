@@ -1,6 +1,12 @@
 R package 'cold' News
 -------------------------------
-2020-08-17 version 2.0-2
+2021-08-23 version 2.0-3
+- amended some fortran code.
+- modification in DESCRIPTION.
+- modification in CITATION.
+
+
+2021-08-17 version 2.0-2
 - added a new reference with doi:10.18637/jss.v099.i03 into the CITATION file, into the Description file and into cold.Rd and cold-package.Rd files.
 
 
@@ -20,7 +26,7 @@ R package 'cold' News
 
 2015-04-15, version 1.0-4:
 - using 'meta' variable when reading the CITATION file.
-- modification of title in DESCRIPTION;
+- modification of title in DESCRIPTION.
 - introduced a NEWS file.
 - amended PDF manual.
 

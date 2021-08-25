@@ -1,4 +1,3 @@
-#citHeader("To cite the cold package in publications #use:")
 
 
 bibentry(bibtype = "Article",
@@ -18,8 +17,7 @@ bibentry(bibtype = "Article",
   header       = "To cite cold in publications use:"
 )
 
-
-citEntry(entry = "Article",
+bibentry(bibtype = "Article",
         title = "Likelihood approach for count data in longitudinal experiments",
         author = personList(as.person("M. Helena Gon\\c{c}alves"),
 				as.person("M. Salom\\'{e} Cabral"),
@@ -38,22 +36,9 @@ citEntry(entry = "Article",
 )
 
 
-year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date)
-vers <- paste("Version", meta$Version)
 
-citEntry(entry = "Manual",
-         title = "{cold}: A Package for {C}ount {L}ongitudinal {D}ata",
-         author = personList(as.person("M. Helena Gon\\c{c}alves"),
-			     as.person("M. Salom\\'{e} Cabral")),
-         year = year,
-         note = vers,
-       	 url = "https://CRAN.R-project.org/package=cold",
-	        textVersion =
-	        paste("Goncalves MH, Cabral MS",
-         	  "(", year, "). cold: A Package for Count Longitudinal Data, ",
-	           vers, ". URL: https://CRAN.R-project.org/package=cold", sep="")
 
-)
+
 
 
 
